@@ -1,5 +1,17 @@
 #!/bin/bash
 
+
+function addUrlNavegator (){
+
+	URL=$(whiptail --title "Select URL" --inputbox "Enter the desire Url:" 10 60 3>&1 1>&2 2>&3)
+	exitstatus=$?
+	if [ $exitstatus = 0 ]; then
+    	cat $URL >> values.txt 
+	else
+    	echo "You chose Cancel."
+	fi
+}
+
 function startSetup (){
 	
 	OPTION=$(whiptail --title "Fac Wizard" --menu "Choose #aplications:" 15 60 2 \
@@ -9,7 +21,7 @@ function startSetup (){
 	case $OPTION in
 
 		1)
-			whiptail --title "option" --msgbox "google chrome" 10 60 ;;
+			addUrlNavegator;;
 		2) 
 			whiptail --title "option" --msgbox "firefox" 10 60;;
 
