@@ -35,10 +35,8 @@ function startSetup (){
 			addUrlGoogleNavegator;;
 		2) 
 			addUrlMozilaNavegator;;
-
 	esac
 }
-
 
 if ( whiptail --title "Fac Wizard" --yes-button "Ok" --no-button "Cancel"  --yesno "Welcome to the Fast Automatization Command (fac). Choose Ok to <continue> or <cancel> to exit." 10 60 ); then
 	
