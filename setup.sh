@@ -1,14 +1,25 @@
 #!/bin/bash
 
+function addUrlMozilaNavegator(){
 
-function addUrlNavegator (){
-
-	URL=$(whiptail --title "Select URL" --inputbox "Enter the desire Url:" 10 60 3>&1 1>&2 2>&3)
-	exitstatus=$?
-	if [ $exitstatus = 0 ]; then
-    	cat $URL >> values.txt 
+	URL=$(whiptail --title "Select URL" --inputbox "Enter the desire URL:" 10 60 3>&1 1>&2 2>&3)
+	existStatus=$?
+	if [ $existStatus = 0 ]; then
+	 	echo "firefox $URL" >> values.sh
 	else
-    	echo "You chose Cancel."
+	    echo "You Choose Cancel."
+	fi
+}
+
+function addUrlGoogleNavegator(){
+
+	URL=$(whiptail --title "Select URL" --inputbox "Enter the desire URL:" 10 60 3>&1 1>&2 2>&3)
+	exitStatus=$?
+
+	if [ $exitStatus = 0 ]; then
+    	echo "google-chrome $URL" >> values.sh
+	else
+    	echo "You choose Cancel."
 	fi
 }
 
@@ -21,16 +32,19 @@ function startSetup (){
 	case $OPTION in
 
 		1)
-			addUrlNavegator;;
+			addUrlGoogleNavegator;;
 		2) 
-			whiptail --title "option" --msgbox "firefox" 10 60;;
+			addUrlMozilaNavegator;;
 
 	esac
 }
 
 
 if ( whiptail --title "Fac Wizard" --yes-button "Ok" --no-button "Cancel"  --yesno "Welcome to the Fast Automatization Command (fac). Choose Ok to <continue> or <cancel> to exit." 10 60 ); then
-	startSetup
+	
+	while [ true ]; do
+     startSetup
+    done
 else
 	exit
 fi
