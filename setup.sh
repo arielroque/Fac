@@ -10,7 +10,6 @@ function addUrlMozilaNavegator(){
 	    echo "You Choose Cancel."
 	fi
 }
-
 function addUrlGoogleNavegator(){
 
 	URL=$(whiptail --title "Select URL" --inputbox "Enter the desire URL:" 10 60 3>&1 1>&2 2>&3)
