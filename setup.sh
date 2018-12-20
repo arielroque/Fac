@@ -1,5 +1,4 @@
 #!/bin/bash
-
 function showNotificationInvalidALias(){
      whiptail -- "Notification" --msgbox "Alias name is empty. Please enter a name"
 }
