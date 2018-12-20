@@ -1,28 +1,43 @@
 #!/bin/bash
-function showNotificationInvalidALias(){
-     whiptail -- "Notification" --msgbox "Alias name is empty. Please enter a name"
+
+function showNotificationInvalidAlias(){
+     whiptail --title "Notification" --msgbox "Alias name is empty. Please enter a name" 10 60
 }
 
 function showNotificationAppAlreadyUsed(){
-    whiptail --title "Notification" --msgbox "$1 already added. Please select another app"
+    whiptail --title "Notification" --msgbox "$1 already added. Please select another app" 10 60
 }
 
 function showNotificationAdded(){
     whiptail --title "Notification" --msgbox "$1 was succesfully added" 10 60
 }
 
+function showProgressBar(){
+    {
+        for ((i = 0 ; i<=100; i+=25)); do  
+		    sleep 0.5;
+			echo $i;
+		done
+	} | whiptail --gauge "Please wait while saving the alias" 6 60 0
+}
+
 function addApp(){
 	echo "$1" >> ~/fac1/$alias.sh
-	showAddedNotification "$2"
+	showNotificationAdded "$2"
 }
 function addUrlBrowser(){
    URL=$(whiptail --title "Select URL" --inputbox "Enter the desire URL:" 10 60 3>&1 1>&2 2>&3)
    existStatus=$?
 
-   if [ $exitStatus = 0 ]; then
-      echo "$1 $URL" >> ~/fac1/$alias.sh
-	  showAddedNotification "$2"
-   fi
+    if [ -n "$URL" ]; then
+       if [ $exitStatus = 0 ]; then
+			echo "$1 $URL" >> ~/fac1/$alias.sh
+			showNotificationAdded "$2"
+	   fi
+	
+    else 
+	     showNotificationInvalidAlias
+	fi
 }
 
 function startSetup (){
@@ -37,7 +52,6 @@ function startSetup (){
 	"8" "Spotify" 3>&1 1>&2 2>&3)
 
 	case $OPTION in
-
 		1)
 			addUrlBrowser "google-chrome" "Google Chrome";;
 		2)
@@ -55,7 +69,10 @@ function startSetup (){
 		8)
 		    addApp "spotify" "Spotify";;		
 
-		*) whiptail --title  "Finish fac" --msgbox "Alias succesfuly saved" 8 78
+		*) 
+           showProgressBar
+
+		   whiptail --title  "Finish Add Alias" --msgbox "Alias succesfuly saved. Please close the terminal to apply the changes" 8 78
 		   
 		   echo " alias $alias='source ~/fac1/$alias.sh'" >> ~/.bashrc
 
@@ -65,10 +82,8 @@ function startSetup (){
     exitStatus=$?
 	
 	if [ $exitStatus = 0 ]; then
-
 	     echo "teste"
 	else 
-
 	    exit
 	fi	
 }
@@ -84,18 +99,19 @@ function createAlias(){
 }
 
 if ( whiptail --title "Fac Wizard" --yes-button "Ok" --no-button "Cancel"  --yesno "Welcome to the Fast Automatization Command (FAC). Choose <Ok> to continue or <cancel> to exit." 10 60 ); then
-    
 	createAlias
 
-	while [ true ]; do
+	if [ -n $URL]; then
+		while [ true ]; do
+			if [ ! -d ~/fac1 ]; then	    
+				mkdir ~/fac1
+			fi
 
-     if [ ! -d ~/fac1 ]; then	    
-		 mkdir ~/fac1
-	 fi
-
-     startSetup
-
-    done
+			startSetup
+		done
+	else
+	   showNotificationInvalidAlias
+	fi
 else
 	exit
 fi
