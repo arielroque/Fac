@@ -100,4 +100,3 @@ if ( whiptail --title "Fac Wizard" --yes-button "Ok" --no-button "Cancel"  --yes
 else
 	exit
 fi
-
