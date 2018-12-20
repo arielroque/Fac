@@ -1,5 +1,42 @@
 #!/bin/bash
 
+function addVlc(){
+	
+}
+
+function addCalculator(){
+
+}
+
+function addLibreOffice(){
+
+
+}
+
+function addSlack(){
+
+
+}
+
+function addEclipse(){
+
+
+}
+
+function addIntelijj(){
+
+
+}
+
+function addMysqlWorkbench(){
+
+}
+
+function addVisualCode(){
+
+
+}
+
 function addUrlMozilaNavegator(){
 
 	URL=$(whiptail --title "Select URL" --inputbox "Enter the desire URL:" 10 60 3>&1 1>&2 2>&3)
@@ -26,7 +63,17 @@ function startSetup (){
 	
 	OPTION=$(whiptail --title "Fac Wizard" --menu "Choose #aplications:" 15 60 2 \
 	"1" "Google Chrome"\
- 	"2" "Mozila Firefox" 3>&1 1>&2 2>&3 )
+ 	"2" "Mozila Firefox"\
+	"3" "Visual Code IDE"\
+	"4" "Intellij IDE"\
+	"5" "Eclipse IDE"\
+	"6" "Mysql Workbench"\
+	"7" "Slack"\
+	"8" "Libre Office"\
+	"9" "Calculator"\
+	"10" "VLC Player"\
+	 
+	 3>&1 1>&2 2>&3 )
 
 	case $OPTION in
 
@@ -47,7 +94,6 @@ function startSetup (){
 	if [ $exitStatus = 0 ]; then
 
 	     echo "teste"
-	
 	else 
 
 	    exit
