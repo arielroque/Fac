@@ -4,10 +4,13 @@ function showNotificationRemoveAlias(){
 	whiptail --title "Notification" --msgbox "Command $1 was removed succesfully" 10 60
 }
 
+function showNotificationAliasAlreadyCreate(){
+    whiptail --title "Notification" --msgbox "Command $1 already added. Please try another name" 10 60
+}
+
 function showNotificationInvalidAlias(){
      whiptail --title "Notification" --msgbox "Command $1 not exit. Please try again" 10 60
 }
-
 function showNotificationEmptyAlias(){
      whiptail --title "Notification" --msgbox "Command name is empty. Please enter a name" 10 60
 }
@@ -33,23 +36,16 @@ function showProgressBar(){
 	} | whiptail --gauge "Please wait while saving the alias" 6 60 0
 }
 
-function isAppInstaled(){
-
-    if [ ! -x "$(command -v $1)" ]; then
-	   return 0
-	else
-	   return 1
-	fi
-}
-
 function addApp(){
 
-    if [ isAppInstaled "$1" -eq 0]; then
+	value=$(dpkg -l | grep "$1")
 
-		echo "$1" >> ~/fac1/$ALIAS.sh
-		showNotificationAdded "$2"
+    if [ -z $value ]; then
+		showNotificationAppNotInstalled "$1"
 	else
-	    showNotificationAppNotInstalled "$1"
+	    echo "$1" >> ~/fac1/$ALIAS.sh
+		showNotificationAdded "$2"
+		
 	fi
 }
 function addUrlBrowser(){
@@ -121,52 +117,63 @@ function removeAlias(){
 
 	if [ -e ~/fac1/$ALIAS.sh ];then
 	   rm ~/fac1/$ALIAS.sh
+	   sed -i "/$ALIAS.sh/d" ~/.bashrc
 	   showNotificationRemoveAlias "$ALIAS"
        
 	else
-
 	   showNotificationInvalidAlias "$ALIAS"
       
 	fi
 }
 
+function listCreatedCommands(){
+	ARCHIVES=$(ls ~/fac1)
+	COMMANDS=${ARCHIVES//.sh/''}
+	whiptail --title "All created commands" --msgbox "$COMMANDS" 10 60
+}
+
 function createAlias(){
 	ALIAS=$(whiptail --title "Create command" --inputbox "Enter the command name:" 10 60 3>&1 1>&2 2>&3)
 	exitStatus=$?
-
-	if [ $exitStatus = 1 ]; then
-	    exit
-	fi
 }
 
-function menu(){
+function menu(){ 
    MENU=$(whiptail --title "Menu" --menu "Select one option:" 15 60 8\
-   "1" "Add alias command"\
-   "2" "Remove alias command"\
-   "3" "Extra" 3>&1 1>&2 2>&3)
+   "1" "Add new command"\
+   "2" "Show all created commands"\
+   "3" "Remove command"\
+   "4" "Extra" 3>&1 1>&2 2>&3)
 
    case $MENU in
 
     1)
 	  createAlias
 		if [ -n "$ALIAS" ]; then
-			while [ true ]; do
-				if [ ! -d ~/fac1 ]; then	    
-					mkdir ~/fac1
-				fi
-				startSetup
-			done
+		    if [ ! -e ~/fac1/$ALIAS.sh ];then
+				while [ true ]; do
+					if [ ! -d ~/fac1 ]; then	    
+						mkdir ~/fac1
+					fi
+					startSetup
+				done
+			else
+				showNotificationAliasAlreadyCreate
+			fi
+			    
 		else
-		showNotificationEmptyAlias
-		main
+			showNotificationEmptyAlias
+			main
 		fi;;
+	
 	2)
+	  listCreatedCommands;;
+	  
 
+	3)
 	  removeAlias;;
 
-	   
-	
-	3) echo "extra";;
+	4) 
+	  echo "extra";;
 
 	esac
 }
