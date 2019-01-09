@@ -1,5 +1,10 @@
 #!/bin/bash
 
+function showDialogExit(){
+	if ( whiptail --title "FAC Exit" --yes-button "Yes" --no-button "No" --yesno "Are you have sure that want to exit?" 10 60 ); then
+		exit
+	fi
+}
 function showNotificationRemoveAlias(){
 	whiptail --title "Notification" --msgbox "Command $1 was removed succesfully" 10 60
 }
@@ -26,7 +31,6 @@ function showNotificationAppNotInstalled(){
 function showNotificationAdded(){
     whiptail --title "Notification" --msgbox "$1 was succesfully added" 10 60
 }
-
 function showProgressBar(){
     {
         for ((i = 0 ; i<=100; i+=25)); do  
@@ -43,9 +47,8 @@ function addApp(){
     if [ -z $value ]; then
 		showNotificationAppNotInstalled "$1"
 	else
-	    echo "$1" >> ~/fac1/$ALIAS.sh
-		showNotificationAdded "$2"
-		
+	    echo "$1&" >> ~/fac1/$ALIAS.sh
+		showNotificationAdded "$2"	
 	fi
 }
 function addUrlBrowser(){
@@ -54,7 +57,7 @@ function addUrlBrowser(){
 
     if [ -n "$URL" ]; then
        if [ $exitStatus = 0 ]; then
-			echo "$1 $URL" >> ~/fac1/$ALIAS.sh
+			echo "$1 $URL&" >> ~/fac1/$ALIAS.sh
 			showNotificationAdded "$2"
 	   fi
 	
@@ -64,7 +67,7 @@ function addUrlBrowser(){
 }
 
 function startSetup (){
-	OPTION=$(whiptail --title "Fac Wizard" --menu "Choose #aplications:" 15 60 8 \
+	OPTION=$(whiptail --title "Fac Wizard" --menu "Choose #aplications:" 15 60 9 \
 	"1" "Google Chrome"\
 	"2" "Google Chrome (Anonymous)"\
 	"3" "Google Chrome (Security Disable)"\
@@ -72,7 +75,8 @@ function startSetup (){
 	"5" "Libre Office"\
 	"6" "Calculator"\
 	"7" "Slack"\
-	"8" "Spotify" 3>&1 1>&2 2>&3)
+	"8" "Spotify"\
+	"9" "Save the command" 3>&1 1>&2 2>&3)
 
 	case $OPTION in
 		1)
@@ -91,15 +95,18 @@ function startSetup (){
 		    addApp "slack" "Slack";;
 		8)
 		    addApp "spotify" "Spotify";;		
-
-		*) 
+		9) 
            showProgressBar
 
 		   whiptail --title  "Finish Add Alias" --msgbox "Alias succesfuly saved. Please close the terminal to apply the changes" 8 78
 		   
 		   echo " alias $ALIAS='source ~/fac1/$ALIAS.sh'" >> ~/.bashrc
 
-		   exit		
+		   exit;;
+		*)
+		   showDialogExit;;
+
+		  	
 	esac
 
     exitStatus=$?
@@ -114,22 +121,19 @@ function startSetup (){
 function removeAlias(){
 	ALIAS=$(whiptail --title "Remove Command" --inputbox "Enter the command name:" 10 60 3>&1 1>&2 2>&3)
 	exitStatus=$?
-
 	if [ -e ~/fac1/$ALIAS.sh ];then
 	   rm ~/fac1/$ALIAS.sh
 	   sed -i "/$ALIAS.sh/d" ~/.bashrc
 	   showNotificationRemoveAlias "$ALIAS"
-       
 	else
-	   showNotificationInvalidAlias "$ALIAS"
-      
+	   showNotificationInvalidAlias "$ALIAS" 
 	fi
 }
 
 function listCreatedCommands(){
 	ARCHIVES=$(ls ~/fac1)
 	COMMANDS=${ARCHIVES//.sh/''}
-	whiptail --title "All created commands" --msgbox "$COMMANDS" 10 60
+	whiptail --title "All created commands" --msgbox --scrolltext "        PRESS KEYBOARD KEY UP OR KEY DOWN TO SCROLL \n$COMMANDS" 10 60
 }
 
 function createAlias(){
@@ -143,6 +147,11 @@ function menu(){
    "2" "Show all created commands"\
    "3" "Remove command"\
    "4" "Extra" 3>&1 1>&2 2>&3)
+
+   EXITSTATUS=$?
+   if [ $EXITSTATUS = 1 ];then
+		exit
+   fi
 
    case $MENU in
 
@@ -164,11 +173,9 @@ function menu(){
 			showNotificationEmptyAlias
 			main
 		fi;;
-	
 	2)
 	  listCreatedCommands;;
-	  
-
+	
 	3)
 	  removeAlias;;
 
@@ -178,11 +185,12 @@ function menu(){
 	esac
 }
 function main(){
-	if ( whiptail --title "Fac Wizard" --yes-button "Ok" --no-button "Cancel"  --yesno "Welcome to the Fast Automatization Command (FAC). Choose <Ok> to continue or <cancel> to exit." 10 60 ); then
-		menu
+	if ( whiptail --title "Fac Wizard" --yes-button "Ok" --no-button "Cancel" --yesno "Welcome to the Fast Automatization Command (FAC). Choose <Ok> to continue or <cancel> to exit." 10 60 ); then
+		while [ true ];do
+			menu
+		done
 	else
 		exit
 	fi
 }
-
 main
