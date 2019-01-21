@@ -52,13 +52,12 @@ function addApp(){
 function addUrlBrowser(){
    URL=$(whiptail --title "Select URL" --inputbox "Enter the desire URL:" 10 60 3>&1 1>&2 2>&3)
    existStatus=$?
-
+   
     if [ -n "$URL" ]; then
        if [ $exitStatus = 0 ]; then
 			echo "$1 $URL&" >> ~/fac1/$ALIAS.sh
 			showNotificationAdded "$2"
 	   fi
-	
     else 
 	     showNotificationEmptyAlias
 	fi
@@ -102,9 +101,7 @@ function startSetup (){
 		   
 		   exit;;
 		*)
-		   showDialogExit;;
-
-		  	
+		   showDialogExit;;	  	
 	esac
 
     exitStatus=$?
@@ -140,18 +137,18 @@ function createAlias(){
 }
 
 function menu(){ 
-   MENU=$(whiptail --title "Menu" --menu "Select one option:" 15 60 8\
-   "1" "Add new command"\
-   "2" "Show all created commands"\
-   "3" "Remove command"\
-   "4" "Extra" 3>&1 1>&2 2>&3)
+	MENU=$(whiptail --title "Menu" --menu "Select one option:" 15 60 8\
+   	"1" "Add new command"\
+   	"2" "Show all created commands"\
+   	"3" "Remove command"\
+   	"4" "Extra" 3>&1 1>&2 2>&3)
 
-   EXITSTATUS=$?
-   if [ $EXITSTATUS = 1 ];then
+   	EXITSTATUS=$?
+   	if [ $EXITSTATUS = 1 ];then
 		exit
-   fi
+   	fi
 
-   case $MENU in
+   	case $MENU in
 
     1)
 	  createAlias
