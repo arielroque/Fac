@@ -14,10 +14,10 @@ function showNotificationAliasAlreadyCreate(){
 }
 
 function showNotificationInvalidAlias(){
-     whiptail --title "Notification" --msgbox "Command $1 not exit. Please try again" 10 60
+    whiptail --title "Notification" --msgbox "Command $1 not exit. Please try again" 10 60
 }
 function showNotificationEmptyAlias(){
-     whiptail --title "Notification" --msgbox "Command name is empty. Please enter a name" 10 60
+    whiptail --title "Notification" --msgbox "Command name is empty. Please enter a name" 10 60
 }
 
 function showNotificationAppAlreadyUsed(){
@@ -39,9 +39,7 @@ function showProgressBar(){
 		done
 	} | whiptail --gauge "Please wait while saving the alias" 6 60 0
 }
-
 function addApp(){
-
 	value=$(dpkg -l | grep "$1")
 
     if [ -z $value ]; then
@@ -100,8 +98,8 @@ function startSetup (){
 
 		   whiptail --title  "Finish Add Alias" --msgbox "Alias succesfuly saved. Please close the terminal to apply the changes" 8 78
 		   
-		   echo " alias $ALIAS='source ~/fac1/$ALIAS.sh'" >> ~/.bashrc
-
+		   echo " alias $ALIAS='source ~/fac1/$ALIAS.sh'" >> ~/fac1/conf/fac-alias.sh
+		   
 		   exit;;
 		*)
 		   showDialogExit;;
@@ -161,7 +159,7 @@ function menu(){
 		    if [ ! -e ~/fac1/$ALIAS.sh ];then
 				while [ true ]; do
 					if [ ! -d ~/fac1 ]; then	    
-						mkdir ~/fac1
+						prepareAmbience
 					fi
 					startSetup
 				done
@@ -184,6 +182,16 @@ function menu(){
 
 	esac
 }
+
+function prepareAmbience(){
+	mkdir ~/fac1
+	mkdir ~/fac1/conf
+	touch ~/fac1/conf/fac-alias.sh
+	cp conf/fac-module.sh  ~/fac1/conf
+	echo "source ~/fac1/conf/fac-module.sh" >> ~/.bashrc
+	echo "source ~/fac1/conf/fac-alias.sh" >> ~/.bashrc
+}
+
 function main(){
 	if ( whiptail --title "Fac Wizard" --yes-button "Ok" --no-button "Cancel" --yesno "Welcome to the Fast Automatization Command (FAC). Choose <Ok> to continue or <cancel> to exit." 10 60 ); then
 		while [ true ];do
