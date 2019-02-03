@@ -5,6 +5,7 @@ FAC is a powerfull Shell Script that helps people to optimize the opening of the
 # New Features!
   - FAC Graphic User Interface (GUI)
   - Add unlisted apps in the commands
+  
  
 ### Installation
  Download the FAC project archive , extract and make
@@ -28,11 +29,9 @@ $ fac add <APP_NAME> <COMMAND_NAME>
 Example:
 ```sh
 $ fac add vlc project1
-
 ```
 ### Removing
  To remove FAC of your PC is simple, just make
 ```sh
 $ fac uninstall
 ```
-
