@@ -3,26 +3,12 @@
 #(C) 2019 Ariel Roque / UFCG
 
 function facAddApp(){
-    if [ -e ~/fac/$2.sh ];then
-       echo $1 >> ~/fac/$2.sh
-       echo -e "\e[32m App successfully added"
+    if [ -e ~/fac/alias/$2.sh ];then
+       echo $1 >> ~/fac/alias/$2.sh
+       echo -e "\e[32m App successfully added\e[0m"
     else
-       echo -e "\e[31m Command \e[0m $2 \e[31m do not exist"
+       echo -e "\e[31m Command \e[0m $2 \e[31m does not exist\e[0m"
     fi
-}
-
-function facListApps(){
-   apps=cat ~/fac/$1.sh
-   echo $apps
-}
-
-function facRemoveApp(){
-   if [ -e ~/fac/$2.sh ];then
-      sed -i "/$1.sh/d" ~/fac/$2.sh
-      echo -e "\e[32m App successfully unistalled"
-   else 
-      echo -e "\e[31m Command \e[0m $2 \e[31m do not exist"
-   fi
 }
 
 function fac(){
