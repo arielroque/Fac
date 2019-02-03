@@ -1,6 +1,6 @@
 # Fast Automatization Command - FAC
 
-FAC is a powerfull Shell Script that helps people to optimize the opening of the work environment. FAC allow to open apps that you need just typing in the terminal a name command created to this. Improve your work, install FAC now!
+FAC is a powerfull Shell Script that helps people to optimize the opening of the work environment. FAC allow to open apps that you need just typing in the terminal a name command created to this. Improve your work, install FAC now.
 
 # New Features!
   - FAC Graphic User Interface (GUI)
