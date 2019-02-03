@@ -4,9 +4,11 @@
 
 function showDialogExit(){
 	if ( whiptail --title "FAC Exit" --yes-button "Yes" --no-button "No" --yesno "Are you have sure that want to exit?" 10 60 ); then
+		rm ~/fac/alias/$ALIAS.sh
 		exit
 	fi
 }
+
 function showNotificationRemoveAlias(){
 	whiptail --title "Notification" --msgbox "Command $1 was removed succesfully" 10 60
 }
@@ -16,10 +18,11 @@ function showNotificationAliasAlreadyCreate(){
 }
 
 function showNotificationInvalidAlias(){
-    whiptail --title "Notification" --msgbox "Command $1 not exit. Please try again" 10 60
+    whiptail --title "Notification" --msgbox "Command $1 does not exist. Please try again" 10 60
 }
-function showNotificationEmptyAlias(){
-    whiptail --title "Notification" --msgbox "Command name is empty. Please enter a name" 10 60
+
+function showNotificationEmpty(){
+    whiptail --title "Notification" --msgbox "$1 name is empty. Please enter again" 10 60
 }
 
 function showNotificationAppAlreadyUsed(){
@@ -31,51 +34,64 @@ function showNotificationAppNotInstalled(){
 }
 
 function showNotificationAdded(){
-    whiptail --title "Notification" --msgbox "$1 was succesfully added" 10 60
+    whiptail --title "Notification" --msgbox "$1 was succesfully added. Make sure that the application is installed on your pc to run" 10 60
 }
+
 function showProgressBar(){
     {
         for ((i = 0 ; i<=100; i+=25)); do  
 		    sleep 0.5;
 			echo $i;
 		done
-	} | whiptail --gauge "Please wait while saving the alias" 6 60 0
+	} | whiptail --gauge "Please wait while saving the command" 6 60 0
 }
-function addApp(){
-	value=$(dpkg -l | grep "$1")
 
-    if [ -z $value ]; then
-		showNotificationAppNotInstalled "$1"
-	else
-	    echo "$1&" >> ~/fac1/$ALIAS.sh
-		showNotificationAdded "$2"	
-	fi
-}
-function addUrlBrowser(){
-   URL=$(whiptail --title "Select URL" --inputbox "Enter the desire URL:" 10 60 3>&1 1>&2 2>&3)
-   existStatus=$?
+function addIde(){
+   URL=$(whiptail --title "$2" --inputbox "Enter the desire path:" 10 60 3>&1 1>&2 2>&3)
+   EXITSTATUS=$?
    
     if [ -n "$URL" ]; then
-       if [ $exitStatus = 0 ]; then
-			echo "$1 $URL&" >> ~/fac1/$ALIAS.sh
+       if [ $EXITSTATUS == 0 ]; then
+			echo "$1 $URL&" >> ~/fac/alias/$ALIAS.sh
 			showNotificationAdded "$2"
 	   fi
     else 
-	     showNotificationEmptyAlias
+	     showNotificationEmpty 'Path'
+	fi
+}
+
+function addApp(){
+	echo "$1&" >> ~/fac/alias/$ALIAS.sh
+	showNotificationAdded "$2"	
+}
+
+function addUrlBrowser(){
+   URL=$(whiptail --title "Select URL" --inputbox "Enter the desire URL:" 10 60 3>&1 1>&2 2>&3)
+   EXITSTATUS=$?
+   
+    if [ -n "$URL" ]; then
+       if [ $EXITSTATUS = 0 ]; then
+			echo "$1 $URL&" >> ~/fac/alias/$ALIAS.sh
+			showNotificationAdded "$2"
+	   fi
+    else 
+	     showNotificationEmpty 'Url'
 	fi
 }
 
 function startSetup (){
-	OPTION=$(whiptail --title "Fac Wizard" --menu "Choose #aplications:" 15 60 9 \
-	"1" "Google Chrome"\
-	"2" "Google Chrome (Anonymous)"\
-	"3" "Google Chrome (Security Disable)"\
-	"4" "Mozila Firefox"\
-	"5" "Libre Office"\
-	"6" "Calculator"\
-	"7" "Slack"\
-	"8" "Spotify"\
-	"9" "Save the command" 3>&1 1>&2 2>&3)
+	OPTION=$(whiptail --title "Fac Wizard" --menu "Choose #aplications:" 18 60 11 \
+	"1" "Google Chrome url"\
+	"2" "Google Chrome url (Anonymous)"\
+	"3" "Google Chrome url (Security Disable)"\
+	"4" "Mozila Firefox url"\
+	"5" "Visual Code project"\
+	"6" "Sublime Ide project"\
+	"7" "Libre Office"\
+	"8" "Calculator"\
+	"9" "Slack"\
+	"10" "Spotify"\
+	"11" "Save the command" 3>&1 1>&2 2>&3)
 
 	case $OPTION in
 		1)
@@ -86,29 +102,33 @@ function startSetup (){
 		    addUrlBrowser "google-chrome-stable --disable-web-security --user-data-dir=~/.config/google-chrome/Default" "Google Chrome (Security Disabled)";;
 		4) 
 			addUrlBrowser "firefox" "Mozila Firefox";;
-		5)
+		5)  
+		    addIde "code" "Visual Code";;
+		6)  
+		    addIde "subl" "Sublime";;
+		7)
 		    addApp "libreoffice" "Libre Office";;
-		6)
-		    addApp "gnome-calculator" "Calculator";;
-		7)  
-		    addApp "slack" "Slack";;
 		8)
+		    addApp "gnome-calculator" "Calculator";;
+		9)  
+		    addApp "slack" "Slack";;
+		10)
 		    addApp "spotify" "Spotify";;		
-		9) 
+		11) 
            showProgressBar
 
-		   whiptail --title  "Finish Add Alias" --msgbox "Alias succesfuly saved. Please close the terminal to apply the changes" 8 78
+		   whiptail --title  "Finish Add Command" --msgbox "Command succesfuly saved. Please close the terminal to apply the changes" 8 78
 		   
-		   echo " alias $ALIAS='source ~/fac1/$ALIAS.sh'" >> ~/fac1/conf/fac-alias.sh
+		   echo " alias $ALIAS='source ~/fac/alias/$ALIAS.sh'" >> ~/fac/conf/fac-alias.sh
 		   
 		   exit;;
 		*)
 		   showDialogExit;;	  	
 	esac
 
-    exitStatus=$?
+    EXITSTATUS=$?
 	
-	if [ $exitStatus = 0 ]; then
+	if [ $EXITSTATUS = 0 ]; then
 	     echo "teste"
 	else 
 	    exit
@@ -117,9 +137,9 @@ function startSetup (){
 
 function removeAlias(){
 	ALIAS=$(whiptail --title "Remove Command" --inputbox "Enter the command name:" 10 60 3>&1 1>&2 2>&3)
-	exitStatus=$?
-	if [ -e ~/fac1/$ALIAS.sh ];then
-	   rm ~/fac1/$ALIAS.sh
+	EXITSTATUS=$?
+	if [ -e ~/fac/alias/$ALIAS.sh ];then
+	   rm ~/fac/alias/$ALIAS.sh
 	   sed -i "/$ALIAS.sh/d" ~/.bashrc
 	   showNotificationRemoveAlias "$ALIAS"
 	else
@@ -128,25 +148,24 @@ function removeAlias(){
 }
 
 function listCreatedCommands(){
-	ARCHIVES=$(ls ~/fac1)
+	ARCHIVES=$(ls ~/fac/alias)
 	COMMANDS=${ARCHIVES//.sh/''}
 	whiptail --title "All created commands" --msgbox --scrolltext "        PRESS KEYBOARD KEY UP OR KEY DOWN TO SCROLL \n$COMMANDS" 10 60
 }
 
 function createAlias(){
 	ALIAS=$(whiptail --title "Create command" --inputbox "Enter the command name:" 10 60 3>&1 1>&2 2>&3)
-	exitStatus=$?
+	EXITSTATUS=$?
 }
 
 function menu(){ 
 	MENU=$(whiptail --title "Menu" --menu "Select one option:" 15 60 8\
    	"1" "Add new command"\
    	"2" "Show all created commands"\
-   	"3" "Remove command"\
-   	"4" "Extra" 3>&1 1>&2 2>&3)
+   	"3" "Remove command" 3>&1 1>&2 2>&3)
 
    	EXITSTATUS=$?
-   	if [ $EXITSTATUS = 1 ];then
+   	if [ $EXITSTATUS == 1 ];then
 		exit
    	fi
 
@@ -155,9 +174,9 @@ function menu(){
     1)
 	  createAlias
 		if [ -n "$ALIAS" ]; then
-		    if [ ! -e ~/fac1/$ALIAS.sh ];then
+		    if [ ! -e ~/fac/alias/$ALIAS.sh ];then
 				while [ true ]; do
-					if [ ! -d ~/fac1 ]; then	    
+					if [ ! -d ~/fac ]; then	    
 						prepareAmbience
 					fi
 					startSetup
@@ -167,7 +186,7 @@ function menu(){
 			fi
 			    
 		else
-			showNotificationEmptyAlias
+			showNotificationEmpty 'Command'
 			main
 		fi;;
 	2)
@@ -175,20 +194,17 @@ function menu(){
 	
 	3)
 	  removeAlias;;
-
-	4) 
-	  echo "extra";;
-
 	esac
 }
 
 function prepareAmbience(){
-	mkdir ~/fac1
-	mkdir ~/fac1/conf
-	touch ~/fac1/conf/fac-alias.sh
-	cp conf/fac-module.sh  ~/fac1/conf
-	echo "source ~/fac1/conf/fac-module.sh" >> ~/.bashrc
-	echo "source ~/fac1/conf/fac-alias.sh" >> ~/.bashrc
+	mkdir ~/fac
+	mkdir ~/fac/conf
+	mkdir ~/fac/alias
+	touch ~/fac/conf/fac-alias.sh
+	cp conf/fac-module.sh  ~/fac/conf
+	echo "source ~/fac/conf/fac-module.sh" >> ~/.bashrc
+	echo "source ~/fac/conf/fac-alias.sh" >> ~/.bashrc
 }
 
 function main(){

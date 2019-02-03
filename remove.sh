@@ -11,10 +11,15 @@ function progress(){
    sleep 1
 }
 
-rm -r ~/fac1
-sed -i "/fac-module.sh/d" ~/.bashrc
-sed -i "/fac-alias.sh/d" ~/.bashrc
+if [ -e ~/fac ];then 
+   rm -r ~/fac
+   sed -i "/fac-module.sh/d" ~/.bashrc
+   sed -i "/fac-alias.sh/d" ~/.bashrc
 
-progress
+   progress
 
-echo -e "\e[32m Uninstall completed successfully \e[0m"
+   echo -e "\e[32m Uninstall completed successfully \e[0m"
+   echo -e "\e[0m Close the terminal to apply the changes"
+else
+   echo -e "\e[31m Error!! FAC does not installed\e[0m"
+fi

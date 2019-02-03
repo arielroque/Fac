@@ -1,6 +1,6 @@
 #!/bin/bash
 #FAC install
-#(C) 2018 Ariel Roque / UFCG
+#(C) 2019 Ariel Roque / UFCG
 
 function progress(){
    echo -ne '\e[93m .....              (32%)\r'
@@ -12,21 +12,23 @@ function progress(){
 }
 
 function startAmbiance(){
-   mkdir ~/fac1
-   mkdir ~/fac1/conf
-   touch ~/fac1/conf/fac-alias.sh
-   cp conf/fac-module.sh  ~/fac1/conf
-   cp conf/setup.sh ~/fac1/conf
-   echo "alias facgui='source ~/fac1/conf/setup.sh'" >> ~/fac1/conf/fac-alias.sh
-   echo "source ~/fac1/conf/fac-module.sh" >> ~/.bashrc
-   echo "source ~/fac1/conf/fac-alias.sh" >> ~/.bashr
-   source ./conf/fac-module.sh
+   mkdir ~/fac
+   mkdir ~/fac/conf
+   mkdir ~/fac/alias
+   touch ~/fac/conf/fac-alias.sh
+   cp conf/fac-module.sh  ~/fac/conf
+   cp conf/setup.sh ~/fac/conf
+   cp remove.sh ~/fac/conf
+   source ~/fac/conf/fac-alias.sh
+   echo "alias facgui='source ~/fac/conf/setup.sh'" >> ~/fac/conf/fac-alias.sh
+   echo "source ~/fac/conf/fac-module.sh" >> ~/.bashrc
+   echo "source ~/fac/conf/fac-alias.sh" >> ~/.bashrc
 }
 
-if [ ! -d ~/fac1 ];then
+if [ ! -d ~/fac ];then
     startAmbiance
 else
-   rm -r ~/fac1
+   rm -r ~/fac
    sed -i "/fac-module.sh/d" ~/.bashrc
    sed -i "/fac-alias.sh/d" ~/.bashrc
 
@@ -36,4 +38,5 @@ fi
 progress
 
 echo -e "\e[32m Instalation completed successfully \e[0m"
-echo -e "\e[0m Start Fac typing in the terminal --> \e[96m fac open\e[0m"
+echo -e "\e[0m Close the terminal to apply the changes"
+
