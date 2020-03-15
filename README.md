@@ -1,26 +1,25 @@
-# Fast Automatization Command - FAC
 
-FAC is a powerfull Shell Script that helps people to optimize the opening of the work environment. FAC allow to open apps that you need just typing in the terminal a name command created to this. Improve your work, install FAC now.
+![fac logo](https://user-images.githubusercontent.com/17733053/76709507-04f29100-66de-11ea-9a8a-0b6a81d588aa.png)
 
-# New Features!
-  - FAC Graphic User Interface (GUI)
-  - Add unlisted apps in the commands
-  
- 
-### Installation
- Download the FAC project archive , extract and make
+## Installation
 
-```sh
-$ cd fac
-$ source install.sh
-
+Clone  the repository and enter the directory using cd
+```
+git clone https://github.com/arielroque/fac.git
+cd fac
+```
+To install fac , run the following script:
+```
+source install.sh
 ```
 
-### Utilization
-After install you can open the FAC to use the features
-```sh
-$ fac open
+## Usage
+
+After install, you can open the fac to use the features using the follow command in the terminal 
 ```
+fac open
+```
+
 To add a unlisted app in a command created make 
 
 ```sh
@@ -30,8 +29,12 @@ Example:
 ```sh
 $ fac add vlc project1
 ```
-### Removing
- To remove FAC of your PC is simple, just make
-```sh
-$ fac uninstall
-```
+
+## Screenshots
+
+
+## Contributing
+
+Pull request are also welcome , please read  [CONTRIBUTING.md](https://github.com/arielroque/Mi-action/blob/developer/CONTRIBUTING.md)  for details on our code of conduct, and the process for submitting pull requests to us.
+    
+-   Check  [issue templates](https://github.com/arielroque/Mi-action/issues)  for the suggested issue formats
