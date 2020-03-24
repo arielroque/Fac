@@ -1,7 +1,6 @@
 #!/bin/bash
 # fac remove
 
-
 function facLabel(){
    echo -e '\e[95m _____      _        ____'  
    echo -e '\e[95m|" ___|U   /"\  u U /"___|' 
