@@ -1,6 +1,18 @@
 #!/bin/bash
-#FAC install
-#(C) 2019 Ariel Roque / UFCG
+#fac install
+
+function facLabel(){
+   echo -e '\e[95m _____      _        ____'  
+   echo -e '\e[95m|" ___|U   /"\  u U /"___|' 
+   echo -e '\e[95mU| |_  u \/ _ \/  \| | u'   
+   echo -e '\e[95m\|  _|/  / ___ \   | |/__'  
+   echo -e '\e[95m |_|    /_/   \_\   \____|' 
+   echo -e '\e[95m)(\\,-  \\    >>  _// \\'  
+   echo -e '\e[95m(__)(_/ (__)  (__)(__)(__)' 
+   echo ""
+   echo  -e '\e[96mFast Automatization Command'
+   echo ""
+}
 
 function progress(){
    echo -ne '\e[93m .....              (32%)\r'
@@ -15,13 +27,15 @@ function startAmbiance(){
    mkdir ~/fac
    mkdir ~/fac/conf
    mkdir ~/fac/alias
+
    touch ~/fac/conf/fac-alias.sh
-   cp conf/fac-module.sh  ~/fac/conf
-   cp conf/setup.sh ~/fac/conf
+   cp conf/fac-cli.sh  ~/fac/conf
+   cp conf/fac-gui.sh ~/fac/conf
    cp remove.sh ~/fac/conf
    source ~/fac/conf/fac-alias.sh
+
    echo "alias facgui='source ~/fac/conf/setup.sh'" >> ~/fac/conf/fac-alias.sh
-   echo "source ~/fac/conf/fac-module.sh" >> ~/.bashrc
+   echo "source ~/fac/conf/fac-cli.sh" >> ~/.bashrc
    echo "source ~/fac/conf/fac-alias.sh" >> ~/.bashrc
 }
 
@@ -35,8 +49,10 @@ else
    startAmbiance
 fi
 
+facLabel
+
 progress
 
-echo -e "\e[32m Instalation completed successfully \e[0m"
-echo -e "\e[0m Close the terminal to apply the changes"
+echo -e "\e[32m--> Instalation completed successfully \e[0m"
+echo -e "\e[0m    Close the terminal to apply the changes"
 

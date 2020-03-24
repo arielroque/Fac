@@ -1,6 +1,5 @@
 #!/bin/bash
-#FAC setup 
-#(C) 2019 Ariel Roque / UFCG
+#fac GUI
 
 function showDialogExit(){
 	if ( whiptail --title "FAC Exit" --yes-button "Yes" --no-button "No" --yesno "Are you have sure that want to exit?" 10 60 ); then
