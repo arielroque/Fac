@@ -1,4 +1,6 @@
 # Fast Automatization Command - FAC
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Farielroque%2Ffac.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2Farielroque%2Ffac?ref=badge_shield)
+
 
 FAC is a powerfull Shell Script that helps people to optimize the opening of the work environment. FAC allow to open apps that you need just typing in the terminal a name command created to this. Improve your work, install FAC now.
 
@@ -35,3 +37,7 @@ $ fac add vlc project1
 ```sh
 $ fac uninstall
 ```
+
+
+## License
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Farielroque%2Ffac.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2Farielroque%2Ffac?ref=badge_large)
