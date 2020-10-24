@@ -1,7 +1,6 @@
 #!/bin/bash
-# fac remove
 
-function facLabel(){
+function fac_label(){
    echo -e '\e[95m _____      _        ____'  
    echo -e '\e[95m|" ___|U   /"\  u U /"___|' 
    echo -e '\e[95mU| |_  u \/ _ \/  \| | u'   
@@ -23,19 +22,4 @@ function progress(){
    sleep 1
 }
 
-if [ -e ~/fac ];then 
-   rm -r ~/fac
-   sed -i "/fac-cli.sh/d" ~/.bashrc
-   sed -i "/fac-alias.sh/d" ~/.bashrc
-
-   facLabel
-   progress
-
-   echo -e "\e[32m--> Uninstall completed successfully \e[0m"
-   echo -e "\e[0m    Close the terminal to apply the changes"
-   echo ""
-else
-   facLabel
-   echo -e "\e[31m--> Error! FAC does not installed\e[0m"
-   echo ""
-fi
+export -f fac_label progress

@@ -30,13 +30,13 @@ function fac(){
      echo -e "   \e[95muninstall\e[0m Uninstall Fac in your computer"
   else
      if [ "$1" == "gui" -a  -z "$2" -a -z "$3" ];then
-        source ~/fac/conf/fac-gui.sh
+        source ~/fac/configuration/fac-gui.sh
      else
         if [ "$1" == "add" -a -n "$2" -a -n "$3" ]; then
               facAddApp $2 $3
          else 
             if [ "$1" == "uninstall" ];then 
-               source ~/fac/conf/remove.sh  
+               source ~/fac/configuration/uninstall.sh  
             else 
                echo -e "\e[31mOps! wrong command or arguments\e[0m"  
             fi
