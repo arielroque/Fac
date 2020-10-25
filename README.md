@@ -1,16 +1,23 @@
 
 ![fac logo](https://user-images.githubusercontent.com/17733053/76709507-04f29100-66de-11ea-9a8a-0b6a81d588aa.png)
 
+### Requirements
+
+- [**Unix Shell**](https://en.wikipedia.org/wiki/Bash_(Unix_shell))
+
+
 ## Installation
 
-Clone  the repository and enter the directory using cd
-```
+```bash
+# Clone  the repository
 git clone https://github.com/arielroque/fac.git
+
+# Enter in the directory using cd
 cd fac
-```
-To install fac , run the following script:
-```
+
+# Execute the following script
 source install.sh
+
 ```
 
 ## Usage
