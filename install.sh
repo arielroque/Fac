@@ -8,10 +8,8 @@ function start_enviroment(){
    mkdir ~/fac/configuration
    mkdir ~/fac/alias
 
+   cp -r configuration/*  ~/fac/configuration/
    touch ~/fac/configuration/fac-alias.sh
-   cp configuration/fac-cli.sh  ~/fac/configuration
-   cp configuration/fac-gui.sh ~/fac/configuration
-   cp uninstall.sh ~/fac/configuration
    source ~/fac/configuration/fac-alias.sh
 
    echo "alias facgui='source ~/fac/configuration/setup.sh'" >> ~/fac/configuration/fac-alias.sh
