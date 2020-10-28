@@ -69,7 +69,7 @@ function startSetup() {
 
 		whiptail --title "Finish Add Command" --msgbox "Command succesfuly saved. Please close the terminal to apply the changes" 8 78
 
-		echo " alias $ALIAS='source ~/fac/alias/$ALIAS.sh'" >>~/fac/src/fac-alias.sh
+		echo " alias $ALIAS='source ~/fac/alias/$ALIAS.sh'" >>~/fac/src/fac_alias.sh
 
 		exit
 		;;
@@ -138,10 +138,10 @@ function prepare_enviroment() {
 	mkdir ~/fac
 	mkdir ~/fac/src
 	mkdir ~/fac/alias
-	touch ~/fac/src/fac-alias.sh
+	touch ~/fac/src/fac_alias.sh
 	cp conf/fac-module.sh ~/fac/src
-	echo "source ~/fac/conf/fac-module.sh" >>~/.bashrc
-	echo "source ~/fac/conf/fac-alias.sh" >>~/.bashrc
+	echo "source ~/fac/conf/fac_module.sh" >>~/.bashrc
+	echo "source ~/fac/conf/fac_alias.sh" >>~/.bashrc
 }
 
 function main() {

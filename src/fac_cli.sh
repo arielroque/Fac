@@ -33,7 +33,7 @@ function fac(){
      echo -e "   \e[95muninstall\e[0m Uninstall Fac in your computer"
   else
      if [ "$1" == "gui" -a  -z "$2" -a -z "$3" ];then
-        source ~/fac/src/fac-gui.sh
+        source ~/fac/src/fac_gui.sh
      else
         if [ "$1" == "add" -a -n "$2" -a -n "$3" ]; then
               add_app

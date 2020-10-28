@@ -9,12 +9,12 @@ function start_enviroment(){
    mkdir ~/fac/alias
 
    cp -r src/*  ~/fac/src/
-   touch ~/fac/src/fac-alias.sh
-   source ~/fac/src/fac-alias.sh
+   touch ~/fac/src/fac_alias.sh
+   source ~/fac/src/fac_alias.sh
 
-   echo "alias facgui='source ~/fac/src/setup.sh'" >> ~/fac/src/fac-alias.sh
-   echo "source ~/fac/src/fac-cli.sh" >> ~/.bashrc
-   echo "source ~/fac/src/fac-alias.sh" >> ~/.bashrc
+   echo "alias facgui='source ~/fac/src/setup.sh'" >> ~/fac/src/fac_alias.sh
+   echo "source ~/fac/src/fac_cli.sh" >> ~/.bashrc
+   echo "source ~/fac/src/fac_alias.sh" >> ~/.bashrc
 }
 
 if [ ! -d ~/fac ];then
@@ -22,8 +22,8 @@ if [ ! -d ~/fac ];then
    
 else
    rm -r ~/fac
-   sed -i "/fac-module.sh/d" ~/.bashrc
-   sed -i "/fac-alias.sh/d" ~/.bashrc
+   sed -i "/fac_module.sh/d" ~/.bashrc
+   sed -i "/fac_alias.sh/d" ~/.bashrc
 
    start_enviroment
 
