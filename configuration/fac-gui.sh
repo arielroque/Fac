@@ -2,28 +2,9 @@
 #fac GUI
 
 source ~/fac/configuration/utils/dialogs.sh
+source ~/fac/configuration/operations/operations.sh
 
-function addIde() {
-	URL=$(whiptail --title "$2" --inputbox "Enter the desire path:" 10 60 3>&1 1>&2 2>&3)
-	EXITSTATUS=$?
-
-	if [ -n "$URL" ]; then
-		if [ $EXITSTATUS == 0 ]; then
-			echo "$1 $URL&" >>~/fac/alias/$ALIAS.sh
-			show_sucessfully_alias_dialog "$2"
-		fi
-	else
-		show_empty_alias_dialog
-	 'Path'
-	fi
-}
-
-function addApp() {
-	echo "$1&" >>~/fac/alias/$ALIAS.sh
-	show_sucessfully_alias_dialog "$2"
-}
-
-function addUrlBrowser() {
+function add_url_browser() {
 	URL=$(whiptail --title "Select URL" --inputbox "Enter the desire URL:" 10 60 3>&1 1>&2 2>&3)
 	EXITSTATUS=$?
 
@@ -54,34 +35,34 @@ function startSetup() {
 
 	case $OPTION in
 	1)
-		addUrlBrowser "google-chrome" "Google Chrome"
+		add_url_browser "google-chrome" "Google Chrome"
 		;;
 	2)
-		addUrlBrowser "google-chrome --incognito" "Google Chrome (Anonymous)"
+		add_url_browser "google-chrome --incognito" "Google Chrome (Anonymous)"
 		;;
 	3)
-		addUrlBrowser "google-chrome-stable --disable-web-security --user-data-dir=~/.config/google-chrome/Default" "Google Chrome (Security Disabled)"
+		add_url_browser "google-chrome-stable --disable-web-security --user-data-dir=~/.config/google-chrome/Default" "Google Chrome (Security Disabled)"
 		;;
 	4)
-		addUrlBrowser "firefox" "Mozila Firefox"
+		add_url_browser "firefox" "Mozila Firefox"
 		;;
 	5)
-		addIde "code" "Visual Code"
+		add_ide "code" "Visual Code"
 		;;
 	6)
-		addIde "subl" "Sublime"
+		add_ide "subl" "Sublime"
 		;;
 	7)
-		addApp "libreoffice" "Libre Office"
+		add_app "libreoffice" "Libre Office"
 		;;
 	8)
-		addApp "gnome-calculator" "Calculator"
+		add_app "gnome-calculator" "Calculator"
 		;;
 	9)
-		addApp "slack" "Slack"
+		add_app "slack" "Slack"
 		;;
 	10)
-		addApp "spotify" "Spotify"
+		add_app "spotify" "Spotify"
 		;;
 	11)
 		show_progress_bar
@@ -106,25 +87,7 @@ function startSetup() {
 	fi
 }
 
-function removeAlias() {
-	ALIAS=$(whiptail --title "Remove Command" --inputbox "Enter the command name:" 10 60 3>&1 1>&2 2>&3)
-	EXITSTATUS=$?
-	if [ -e ~/fac/alias/$ALIAS.sh ]; then
-		rm ~/fac/alias/$ALIAS.sh
-		sed -i "/$ALIAS.sh/d" ~/.bashrc
-		show_removed_alias_dialog "$ALIAS"
-	else
-		show_invalid_alias_dialog "$ALIAS"
-	fi
-}
-
-function listCreatedCommands() {
-	ARCHIVES=$(ls ~/fac/alias)
-	COMMANDS=${ARCHIVES//.sh/''}
-	whiptail --title "All created commands" --msgbox --scrolltext "        PRESS KEYBOARD KEY UP OR KEY DOWN TO SCROLL \n$COMMANDS" 10 60
-}
-
-function createAlias() {
+function create_alias() {
 	ALIAS=$(whiptail --title "Create command" --inputbox "Enter the command name:" 10 60 3>&1 1>&2 2>&3)
 	EXITSTATUS=$?
 }
@@ -142,12 +105,12 @@ function menu() {
 	case $MENU in
 
 	1)
-		createAlias
+		create_alias
 		if [ -n "$ALIAS" ]; then
 			if [ ! -e ~/fac/alias/$ALIAS.sh ]; then
 				while [ true ]; do
 					if [ ! -d ~/fac ]; then
-						prepareAmbience
+						prepare_enviroment
 					fi
 					startSetup
 				done
@@ -162,16 +125,16 @@ function menu() {
 		fi
 		;;
 	2)
-		listCreatedCommands
+		list_created_commands
 		;;
 
 	3)
-		removeAlias
+		remove_alias
 		;;
 	esac
 }
 
-function prepareAmbience() {
+function prepare_enviroment() {
 	mkdir ~/fac
 	mkdir ~/fac/conf
 	mkdir ~/fac/alias
