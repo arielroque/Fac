@@ -1,6 +1,6 @@
 #!/bin/bash
 
-source ~/fac/configuration/utils/dialogs.sh
+source ~/fac/src/utils/dialogs.sh
 
 function add_ide() {
 	URL=$(whiptail --title "$2" --inputbox "Enter the desire path:" 10 60 3>&1 1>&2 2>&3)

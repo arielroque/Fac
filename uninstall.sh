@@ -1,7 +1,7 @@
 #!/bin/bash
-#fac remove
+#fac uninstall
 
-source ./configuration/utils/fac_utils.sh
+source ./src/utils/fac_utils.sh
 
 if [ -e ~/fac ];then 
    rm -r ~/fac

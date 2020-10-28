@@ -1,5 +1,5 @@
 #!/bin/bash
-#Fac CLI
+#fac cli
 
 function addIde(){
    URL=$(whiptail --title "$2" --inputbox "Enter the desire path:" 10 60 3>&1 1>&2 2>&3)
@@ -33,14 +33,14 @@ function fac(){
      echo -e "   \e[95muninstall\e[0m Uninstall Fac in your computer"
   else
      if [ "$1" == "gui" -a  -z "$2" -a -z "$3" ];then
-        source ~/fac/configuration/fac-gui.sh
+        source ~/fac/src/fac-gui.sh
      else
         if [ "$1" == "add" -a -n "$2" -a -n "$3" ]; then
               add_app
              $2 $3
          else 
             if [ "$1" == "uninstall" ];then 
-               source ~/fac/configuration/uninstall.sh  
+               source ~/fac/src/uninstall.sh  
             else 
                echo -e "\e[31mOps! wrong command or arguments\e[0m"  
             fi

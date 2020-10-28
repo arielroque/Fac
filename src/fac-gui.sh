@@ -1,8 +1,8 @@
 #!/bin/bash
-#fac GUI
+#fac gui
 
-source ~/fac/configuration/utils/dialogs.sh
-source ~/fac/configuration/operations/operations.sh
+source ~/fac/src/utils/dialogs.sh
+source ~/fac/src/operations/operations.sh
 
 function add_url_browser() {
 	URL=$(whiptail --title "Select URL" --inputbox "Enter the desire URL:" 10 60 3>&1 1>&2 2>&3)
@@ -69,7 +69,7 @@ function startSetup() {
 
 		whiptail --title "Finish Add Command" --msgbox "Command succesfuly saved. Please close the terminal to apply the changes" 8 78
 
-		echo " alias $ALIAS='source ~/fac/alias/$ALIAS.sh'" >>~/fac/configuration/fac-alias.sh
+		echo " alias $ALIAS='source ~/fac/alias/$ALIAS.sh'" >>~/fac/src/fac-alias.sh
 
 		exit
 		;;
@@ -136,10 +136,10 @@ function menu() {
 
 function prepare_enviroment() {
 	mkdir ~/fac
-	mkdir ~/fac/conf
+	mkdir ~/fac/src
 	mkdir ~/fac/alias
-	touch ~/fac/conf/fac-alias.sh
-	cp conf/fac-module.sh ~/fac/conf
+	touch ~/fac/src/fac-alias.sh
+	cp conf/fac-module.sh ~/fac/src
 	echo "source ~/fac/conf/fac-module.sh" >>~/.bashrc
 	echo "source ~/fac/conf/fac-alias.sh" >>~/.bashrc
 }

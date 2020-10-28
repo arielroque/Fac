@@ -1,20 +1,20 @@
 #!/bin/bash
 #fac install
 
-source ./configuration/utils/fac_utils.sh
+source ./src/utils/fac_utils.sh
 
 function start_enviroment(){
    mkdir ~/fac
-   mkdir ~/fac/configuration
+   mkdir ~/fac/src
    mkdir ~/fac/alias
 
-   cp -r configuration/*  ~/fac/configuration/
-   touch ~/fac/configuration/fac-alias.sh
-   source ~/fac/configuration/fac-alias.sh
+   cp -r src/*  ~/fac/src/
+   touch ~/fac/src/fac-alias.sh
+   source ~/fac/src/fac-alias.sh
 
-   echo "alias facgui='source ~/fac/configuration/setup.sh'" >> ~/fac/configuration/fac-alias.sh
-   echo "source ~/fac/configuration/fac-cli.sh" >> ~/.bashrc
-   echo "source ~/fac/configuration/fac-alias.sh" >> ~/.bashrc
+   echo "alias facgui='source ~/fac/src/setup.sh'" >> ~/fac/src/fac-alias.sh
+   echo "source ~/fac/src/fac-cli.sh" >> ~/.bashrc
+   echo "source ~/fac/src/fac-alias.sh" >> ~/.bashrc
 }
 
 if [ ! -d ~/fac ];then
