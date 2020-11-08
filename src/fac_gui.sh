@@ -4,19 +4,30 @@
 source ~/fac/src/utils/dialogs.sh
 source ~/fac/src/operations/operations.sh
 
-function add_url_browser() {
+function handle_add_url_browser() {
 	URL=$(whiptail --title "Select URL" --inputbox "Enter the desire URL:" 10 60 3>&1 1>&2 2>&3)
 	EXITSTATUS=$?
 
-	if [ -n "$URL" ]; then
-		if [ $EXITSTATUS = 0 ]; then
-			echo "$1 $URL&" >>~/fac/alias/$ALIAS.sh
-			show_sucessfully_alias_dialog "$2"
-		fi
-	else
-		show_empty_alias_dialog
-	 'Url'
-	fi
+	add_browser $1 "$2" $URL $ALIAS
+}
+
+function handle_add_app(){
+	add_app $1 "$2" $ALIAS
+}
+
+function handle_add_ide(){
+	PATH=$(whiptail --title "$2" --inputbox "Enter the desire path:" 10 60 3>&1 1>&2 2>&3)
+	EXITSTATUS=$?
+
+	add_ide $1 "$2" $PATH $ALIAS
+}
+
+
+function handle_remove_command(){
+	ALIAS=$(whiptail --title "Remove Command" --inputbox "Enter the command name:" 10 60 3>&1 1>&2 2>&3)
+	EXITSTATUS=$?
+
+	remove_command $ALIAS
 }
 
 function startSetup() {
@@ -35,34 +46,34 @@ function startSetup() {
 
 	case $OPTION in
 	1)
-		add_url_browser "google-chrome" "Google Chrome"
+		handle_add_url_browser "google-chrome" "Google Chrome"
 		;;
 	2)
-		add_url_browser "google-chrome --incognito" "Google Chrome (Anonymous)"
+		handle_add_url_browser "google-chrome --incognito" "Google Chrome (Anonymous)"
 		;;
 	3)
-		add_url_browser "google-chrome-stable --disable-web-security --user-data-dir=~/.config/google-chrome/Default" "Google Chrome (Security Disabled)"
+		handle_add_url_browser "google-chrome-stable --disable-web-security --user-data-dir=~/.config/google-chrome/Default" "Google Chrome (Security Disabled)"
 		;;
 	4)
-		add_url_browser "firefox" "Mozila Firefox"
+		handle_add_url_browser "firefox" "Mozila Firefox"
 		;;
 	5)
-		add_ide "code" "Visual Code"
+		handle_add_url_browser "code" "Visual Code"
 		;;
 	6)
-		add_ide "subl" "Sublime"
+		handle_add_ide "subl" "Sublime"
 		;;
 	7)
-		add_app "libreoffice" "Libre Office"
+		handle_add_app "libreoffice" "Libre Office"
 		;;
 	8)
-		add_app "gnome-calculator" "Calculator"
+		handle_add_app "gnome-calculator" "Calculator"
 		;;
 	9)
-		add_app "slack" "Slack"
+		handle_add_app "slack" "Slack"
 		;;
 	10)
-		add_app "spotify" "Spotify"
+		handle_add_app "spotify" "Spotify"
 		;;
 	11)
 		show_progress_bar
@@ -129,7 +140,7 @@ function menu() {
 		;;
 
 	3)
-		remove_alias
+		handle_remove_command
 		;;
 	esac
 }
