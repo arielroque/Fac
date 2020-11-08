@@ -34,6 +34,16 @@ function remove_alias() {
 	fi
 }
 
+function handle(){
+	if [ -e ~/fac/alias/$1.sh ]; then
+		rm ~/fac/alias/$1.sh
+		sed -i "/$1.sh/d" ~/.bashrc
+		show_removed_alias_dialog "$1"
+	else
+		show_invalid_alias_dialog "$1"
+	fi
+}
+
 function list_created_commands() {
 	ARCHIVES=$(ls ~/fac/alias)
 	COMMANDS=${ARCHIVES//.sh/''}

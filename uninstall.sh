@@ -8,7 +8,6 @@ if [ -e ~/fac ];then
    sed -i "/fac_cli.sh/d" ~/.bashrc
    sed -i "/fac_alias.sh/d" ~/.bashrc
 
-   fac_label
    progress
 
    echo -e "\e[32m--> Uninstall completed successfully \e[0m"

@@ -1,19 +1,8 @@
 #!/bin/bash
 #fac cli
 
-function addIde(){
-   URL=$(whiptail --title "$2" --inputbox "Enter the desire path:" 10 60 3>&1 1>&2 2>&3)
-   EXITSTATUS=$?
-   
-    if [ -n "$URL" ]; then
-       if [ $EXITSTATUS == 0 ]; then
-			echo "$1 $URL&" >> ~/fac/alias/$ALIAS.sh
-			show_sucessfully_alias_dialog "$2"
-	   fi
-    else 
-	     show_empty_alias_dialog 'Path'
-	fi
-}
+source ~/fac/src/utils/fac_utils.sh
+source ~/fac/src/operations/operations.sh
 
 function add_app(){
     if [ -e ~/fac/alias/$2.sh ];then
@@ -26,11 +15,18 @@ function add_app(){
 
 function fac(){
   if [ -z "$1" -a -z "$2" -a -z "$3" ];then
+
+     fac_label
+
+     echo 'Usage: fac <command> [arguments]'
+     echo ''
+
      echo 'Available commands:'
-     echo -e "   \e[95mgui\e[0m Open the Fac Graphic User Interface (GUI)"
-     echo -e "   \e[95madd\e[0m Add app in created commands"
-     echo -e "   \e[95mls\e[0m List all created commands"
-     echo -e "   \e[95muninstall\e[0m Uninstall Fac in your computer"
+     echo ''
+     echo -e "   \e[95mgui\e[0m          Open the Fac Graphic User Interface (GUI)"
+     echo -e "   \e[95madd\e[0m          Add app in created commands"
+     echo -e "   \e[95mls\e[0m           List all created commands"
+     echo -e "   \e[95muninstall\e[0m    Uninstall Fac in your computer"
   else
      if [ "$1" == "gui" -a  -z "$2" -a -z "$3" ];then
         source ~/fac/src/fac_gui.sh
@@ -39,10 +35,21 @@ function fac(){
               add_app
              $2 $3
          else 
-            if [ "$1" == "uninstall" ];then 
-               source ~/fac/src/uninstall.sh  
-            else 
-               echo -e "\e[31mOps! wrong command or arguments\e[0m"  
+            if [ "$1" == "rm" ];then
+               handle $2
+            else    
+               if [ "$1" == "ls" ];then
+                  list_created_commands
+                  
+               else 
+                  if [ "$1" == "uninstall" ];then 
+                     source ~/fac/uninstall.sh  
+                  
+                  else
+                     echo -e "\e[31mOps! wrong command or arguments\e[0m" 
+
+                  fi
+               fi      
             fi
          fi
      fi

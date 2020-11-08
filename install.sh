@@ -9,6 +9,8 @@ function start_enviroment(){
    mkdir ~/fac/alias
 
    cp -r src/*  ~/fac/src/
+   cp ./uninstall.sh ~/fac/
+   
    touch ~/fac/src/fac_alias.sh
    source ~/fac/src/fac_alias.sh
 
