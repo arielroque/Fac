@@ -2,28 +2,28 @@
 #fac gui
 
 source ~/fac/src/utils/dialogs.sh
+source ~/fac/src/utils/fac_utils.sh
 source ~/fac/src/operations/operations.sh
 
 function handle_add_url_browser() {
 	URL=$(whiptail --title "Select URL" --inputbox "Enter the desire URL:" 10 60 3>&1 1>&2 2>&3)
 	EXITSTATUS=$?
 
-	add_browser $1 "$2" $URL $ALIAS
+	add_browser "$1" "$2" $URL $ALIAS
 }
 
-function handle_add_app(){
-	add_app $1 "$2" $ALIAS
+function handle_add_app() {
+	add_app "$1" "$2" $ALIAS
 }
 
-function handle_add_ide(){
+function handle_add_ide() {
 	PATH=$(whiptail --title "$2" --inputbox "Enter the desire path:" 10 60 3>&1 1>&2 2>&3)
 	EXITSTATUS=$?
 
-	add_ide $1 "$2" $PATH $ALIAS
+	add_ide "$1" "$2" $PATH $ALIAS
 }
 
-
-function handle_remove_command(){
+function handle_remove_command() {
 	ALIAS=$(whiptail --title "Remove Command" --inputbox "Enter the command name:" 10 60 3>&1 1>&2 2>&3)
 	EXITSTATUS=$?
 
@@ -31,18 +31,33 @@ function handle_remove_command(){
 }
 
 function startSetup() {
+
+	ARRAY=()
+	INPUT=~/fac/src/resources/applications.csv
+	OLDIFS=$IFS
+	IFS=';'
+	COUNT=0
+	INDEX=0;
+
+	[ ! -f $INPUT ] && {
+		echo "$INPUT file not found"
+		exit 99
+	}
+
+	while read name type; do
+		if [ ! -z $name ] && [ ! -z $type ]; then
+			ARRAY[$((COUNT += 1))]="$((INDEX+=1))"
+			ARRAY[$((COUNT += 1))]="$name"
+		fi
+	done <$INPUT
+	IFS=$OLDIFS
+
+	ARRAY[$((COUNT += 1))]="$((INDEX+=1))"
+	ARRAY[$((COUNT += 1))]="Finalizar"
+	
+
 	OPTION=$(whiptail --title "Fac Wizard" --menu "Choose #aplications:" 18 60 11 \
-		"1" "Google Chrome url" \
-		"2" "Google Chrome url (Anonymous)" \
-		"3" "Google Chrome url (Security Disable)" \
-		"4" "Mozila Firefox url" \
-		"5" "Visual Code project" \
-		"6" "Sublime Ide project" \
-		"7" "Libre Office" \
-		"8" "Calculator" \
-		"9" "Slack" \
-		"10" "Spotify" \
-		"11" "Save the command" 3>&1 1>&2 2>&3)
+		"${ARRAY[@]}" 3>&1 1>&2 2>&3)
 
 	case $OPTION in
 	1)
@@ -96,6 +111,7 @@ function startSetup() {
 	else
 		exit
 	fi
+
 }
 
 function create_alias() {
@@ -131,7 +147,7 @@ function menu() {
 
 		else
 			show_empty_alias_dialog
-		 'Command'
+			'Command'
 			main
 		fi
 		;;
@@ -149,8 +165,10 @@ function prepare_enviroment() {
 	mkdir ~/fac
 	mkdir ~/fac/src
 	mkdir ~/fac/alias
+
 	touch ~/fac/src/fac_alias.sh
 	cp conf/fac-module.sh ~/fac/src
+
 	echo "source ~/fac/conf/fac_module.sh" >>~/.bashrc
 	echo "source ~/fac/conf/fac_alias.sh" >>~/.bashrc
 }
