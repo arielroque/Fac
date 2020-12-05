@@ -1,9 +1,11 @@
 #!/bin/bash
 #fac gui
 
+
 source ~/fac/src/utils/dialogs.sh
 source ~/fac/src/utils/fac_utils.sh
 source ~/fac/src/operations/operations.sh
+
 
 function handle_add_url_browser() {
 	URL=$(whiptail --title "Select URL" --inputbox "Enter the desire URL:" 10 60 3>&1 1>&2 2>&3)
