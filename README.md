@@ -29,13 +29,6 @@ fac open
 
 To add a unlisted app in a command created make 
 
-```sh
-$ fac add <APP_NAME> <COMMAND_NAME>
-```
-Example:
-```sh
-$ fac add vlc project1
-```
 
 ## :camera: Screenshots
 
