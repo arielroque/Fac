@@ -1,11 +1,9 @@
 #!/bin/bash
 #fac gui
 
-
 source ~/fac/src/utils/dialogs.sh
 source ~/fac/src/utils/fac_utils.sh
 source ~/fac/src/operations/operations.sh
-
 
 function handle_add_url_browser() {
 	URL=$(whiptail --title "Select URL" --inputbox "Enter the desire URL:" 10 60 3>&1 1>&2 2>&3)
@@ -19,10 +17,10 @@ function handle_add_app() {
 }
 
 function handle_add_ide() {
-	PATH=$(whiptail --title "$2" --inputbox "Enter the desire path:" 10 60 3>&1 1>&2 2>&3)
+	URL=$(whiptail --title "Select PATH" --inputbox "Enter the desire projet PATH:" 10 60 3>&1 1>&2 2>&3)
 	EXITSTATUS=$?
 
-	add_ide "$1" "$2" $PATH $ALIAS
+	add_ide "$1" "$2" $URL $ALIAS
 }
 
 function handle_remove_command() {
@@ -34,65 +32,49 @@ function handle_remove_command() {
 
 function startSetup() {
 
-	ARRAY=()
+	APPLICATIONS_LIST=()
+	APPLICATIONS_NAMES=()
+	APPLICATIONS_ALIAS=()
+	APPLICATIONS_TYPE=()
+
 	INPUT=~/fac/src/resources/applications.csv
 	OLDIFS=$IFS
 	IFS=';'
+
+	EXIT_INDEX=0
 	COUNT=0
-	INDEX=0;
+	INDEX=0
 
 	[ ! -f $INPUT ] && {
 		echo "$INPUT file not found"
 		exit 99
 	}
 
-	while read name type; do
-		if [ ! -z $name ] && [ ! -z $type ]; then
-			ARRAY[$((COUNT += 1))]="$((INDEX+=1))"
-			ARRAY[$((COUNT += 1))]="$name"
+	while read name alias type; do
+		if [ ! -z $name ] && [ ! -z $alias ] && [ ! -z $type ]; then
+			APPLICATIONS_LIST[$((COUNT += 1))]="$((INDEX += 1))"
+			APPLICATIONS_LIST[$((COUNT += 1))]="$name"
+            
+			APPLICATIONS_NAMES[$((INDEX))]="$name"
+			APPLICATIONS_ALIAS[$((INDEX))]="$alias"
+			APPLICATIONS_TYPE[$((INDEX))]="$type"
 		fi
 	done <$INPUT
+
 	IFS=$OLDIFS
 
-	ARRAY[$((COUNT += 1))]="$((INDEX+=1))"
-	ARRAY[$((COUNT += 1))]="Finalizar"
-	
+	APPLICATIONS_LIST[$((COUNT += 1))]="$((INDEX += 1))"
+	EXIT_INDEX=$INDEX
+	APPLICATIONS_LIST[$((COUNT += 1))]="Finalizar"
 
 	OPTION=$(whiptail --title "Fac Wizard" --menu "Choose #aplications:" 18 60 11 \
-		"${ARRAY[@]}" 3>&1 1>&2 2>&3)
+		"${APPLICATIONS_LIST[@]}" 3>&1 1>&2 2>&3)
 
-	case $OPTION in
-	1)
-		handle_add_url_browser "google-chrome" "Google Chrome"
-		;;
-	2)
-		handle_add_url_browser "google-chrome --incognito" "Google Chrome (Anonymous)"
-		;;
-	3)
-		handle_add_url_browser "google-chrome-stable --disable-web-security --user-data-dir=~/.config/google-chrome/Default" "Google Chrome (Security Disabled)"
-		;;
-	4)
-		handle_add_url_browser "firefox" "Mozila Firefox"
-		;;
-	5)
-		handle_add_url_browser "code" "Visual Code"
-		;;
-	6)
-		handle_add_ide "subl" "Sublime"
-		;;
-	7)
-		handle_add_app "libreoffice" "Libre Office"
-		;;
-	8)
-		handle_add_app "gnome-calculator" "Calculator"
-		;;
-	9)
-		handle_add_app "slack" "Slack"
-		;;
-	10)
-		handle_add_app "spotify" "Spotify"
-		;;
-	11)
+
+	echo $OPTION
+	echo $EXIT_INDEX	
+
+	if [ $OPTION -eq $EXIT_INDEX ]; then
 		show_progress_bar
 
 		whiptail --title "Finish Add Command" --msgbox "Command succesfuly saved. Please close the terminal to apply the changes" 8 78
@@ -100,9 +82,19 @@ function startSetup() {
 		echo " alias $ALIAS='source ~/fac/alias/$ALIAS.sh'" >>~/fac/src/fac_alias.sh
 
 		exit
+	fi
+
+	APPLICATIONS_TYPE_SELECTED="${APPLICATIONS_TYPE[$OPTION]}"
+
+	case $APPLICATIONS_TYPE_SELECTED in
+	"BROWSER")
+		handle_add_url_browser "${APPLICATIONS_ALIAS[$OPTION]}" "${APPLICATIONS_NAMES[$OPTION]}"
 		;;
-	*)
-		show_edit_dialog
+	"IDE")
+		handle_add_ide "${APPLICATIONS_ALIAS[$OPTION]}" "${APPLICATIONS_NAMES[$OPTION]}"
+		;;
+	"GENERAL")
+		handle_add_app "${APPLICATIONS_ALIAS[$OPTION]}" "${APPLICATIONS_NAMES[$OPTION]}"
 		;;
 	esac
 

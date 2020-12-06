@@ -3,14 +3,14 @@
 source ~/fac/src/utils/dialogs.sh
 
 function add_ide() {
-	if [ -n "$1" ]; then
-		if [ $EXITSTATUS == 0 ]; then
+	if [ -n "$3" ]; then
+		if [ $EXITSTATUS = 0 ]; then
 			echo "$1 $3&" >>~/fac/alias/$4.sh
 			show_sucessfully_alias_dialog "$2"
 		fi
 	else
 		show_empty_alias_dialog
-		'Path'
+	 'Url'
 	fi
 }
 
