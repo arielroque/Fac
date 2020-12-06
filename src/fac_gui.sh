@@ -105,7 +105,6 @@ function startSetup() {
 	else
 		exit
 	fi
-
 }
 
 function create_alias() {
