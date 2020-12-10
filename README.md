@@ -27,7 +27,7 @@ fac open
 ```
 ## :wrench: Custom Applications/Commands
 
-Customizing fac with new programs or commands is easy
+Customizing Fac with new programs or commands is easy, please read [CUSTOMIZING.md](/CUSTOMIZING.md) for details.
 
 ## :camera: Screenshots
 
