@@ -19,22 +19,27 @@ cd fac
 source install.sh
 
 ```
-
 ## :computer: Usage
 
 After install, you can open the fac to use the features using the follow command in the terminal 
 ```
 fac open
 ```
+## :wrench: Custom Applications/Commands
 
-To add a unlisted app in a command created make 
-
+Customizing fac with new programs or commands is easy
 
 ## :camera: Screenshots
 
+## :wastebasket: Uninstall
 
+If you want to delete the fac from your computer, just use the following command
+
+```bash
+fac uninstall
+```
 ## :rocket: Contributing
 
-Pull request are also welcome , please read  [CONTRIBUTING.md](https://github.com/arielroque/Mi-action/blob/developer/CONTRIBUTING.md)  for details on our code of conduct, and the process for submitting pull requests to us.
+Pull request are also welcome , please read  [CONTRIBUTING.md](/CONTRIBUTING.md)  for details on our code of conduct, and the process for submitting pull requests to us.
     
 -   Check  [issue templates](https://github.com/arielroque/Mi-action/issues)  for the suggested issue formats
