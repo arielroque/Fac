@@ -32,7 +32,7 @@ Spotify;spotify;GENERAL
 ### Applications.csv structure
 
 Each identifies a program and follows the following structure: **command name**; **alias**; **type**
-| Command Name | Alias| Type  |
+| command name | alias| type  |
 | :------------- |:-------------:| :-----:|
 |Name to identify the program / command| Alias to call the program or command itself | BROWSER - browsers <br> IDE for Ides <br> GENERAL for programs or commands|
 
