@@ -37,6 +37,8 @@ fac open
 Customizing Fac with new programs or commands is easy, please read [CUSTOMIZING.md](/CUSTOMIZING.md) for details.
 
 ## :camera: Screenshots
+![fac_screenshot](https://user-images.githubusercontent.com/17733053/103104782-115e2f80-4608-11eb-8f6a-726bf955cd9d.png)
+
 
 ## :wastebasket: Uninstall
 
