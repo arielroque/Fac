@@ -65,3 +65,7 @@ fac uninstall
 Pull request are also welcome , please read  [CONTRIBUTING.md](/CONTRIBUTING.md)  for details on our code of conduct, and the process for submitting pull requests to us.
     
 -   Check  [issue templates](https://github.com/arielroque/Mi-action/issues)  for the suggested issue formats
+
+## License
+
+This project is licensed under the Apache License - see the [LICENSE.md](https://github.com/arielroque/fac/blob/developer/LICENSE) for details
