@@ -54,7 +54,7 @@ function startSetup() {
 		if [ ! -z $name ] && [ ! -z $alias ] && [ ! -z $type ]; then
 			APPLICATIONS_LIST[$((COUNT += 1))]="$((INDEX += 1))"
 			APPLICATIONS_LIST[$((COUNT += 1))]="$name"
-            
+
 			APPLICATIONS_NAMES[$((INDEX))]="$name"
 			APPLICATIONS_ALIAS[$((INDEX))]="$alias"
 			APPLICATIONS_TYPE[$((INDEX))]="$type"
@@ -70,9 +70,8 @@ function startSetup() {
 	OPTION=$(whiptail --title "Fac Wizard" --menu "Choose #aplications:" 18 60 11 \
 		"${APPLICATIONS_LIST[@]}" 3>&1 1>&2 2>&3)
 
-
 	echo $OPTION
-	echo $EXIT_INDEX	
+	echo $EXIT_INDEX
 
 	if [ $OPTION -eq $EXIT_INDEX ]; then
 		show_progress_bar
@@ -113,9 +112,10 @@ function create_alias() {
 }
 
 function menu() {
-	MENU=$(whiptail --title "Menu" --menu "Select one option:" 15 60 8 "1" "Add new command" \
+	MENU=$(whiptail --title "Fac" --menu "Select one option:" 15 60 8 "1" "Add new command" \
 		"2" "Show all created commands" \
-		"3" "Remove command" 3>&1 1>&2 2>&3)
+		"3" "Remove command" \
+		"4" "Exit" 3>&1 1>&2 2>&3)
 
 	EXITSTATUS=$?
 	if [ $EXITSTATUS == 1 ]; then
@@ -150,6 +150,9 @@ function menu() {
 
 	3)
 		handle_remove_command
+		;;
+	4)
+		exit
 		;;
 	esac
 }
