@@ -1,10 +1,17 @@
 
 ![fac logo](https://user-images.githubusercontent.com/17733053/76709507-04f29100-66de-11ea-9a8a-0b6a81d588aa.png)
 
-### :bookmark: Requirement
+
+## :question: What is Fac?
+Fac is a powerful script that helps to optimize the opening of your workspaces. Create custom commands to **open programs** or perform **actions** quickly.
+
+## :clapper: Demonstration
+
+![fac_introduce](https://user-images.githubusercontent.com/17733053/103103614-eb815c80-4600-11eb-9a2b-e34cb5a9165c.gif)
+
+## :bookmark: Requirement
 
 - [**Unix Shell**](https://en.wikipedia.org/wiki/Bash_(Unix_shell))
-
 
 ## :building_construction: Installation
 
