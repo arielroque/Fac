@@ -28,9 +28,23 @@ source install.sh
 ```
 ## :computer: Usage
 
-After install, you can open the fac to use the features using the follow command in the terminal 
-```
+After install, you can open the Fac running:
+```bash
 fac open
+```
+### Others commands
+
+To see another commands from Fac CLI, run:
+ ```bash
+fac 
+```
+#### Available Commands
+
+```bash
+   open         Open the Fac
+   ls           List all created commands
+   rm           Remove a command created
+   uninstall    Uninstall Fac
 ```
 ## :wrench: Custom Applications/Commands
 
@@ -39,10 +53,9 @@ Customizing Fac with new programs or commands is easy, please read [CUSTOMIZING.
 ## :camera: Screenshots
 ![fac_screenshot](https://user-images.githubusercontent.com/17733053/103104782-115e2f80-4608-11eb-8f6a-726bf955cd9d.png)
 
-
 ## :wastebasket: Uninstall
 
-If you want to delete the fac from your computer, just use the following command
+If you want to delete the Fac from your computer, just use the following command
 
 ```bash
 fac uninstall
