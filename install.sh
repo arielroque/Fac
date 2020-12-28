@@ -1,5 +1,5 @@
 #!/bin/bash
-#fac install
+#Fac Install
 
 source ./src/utils/fac_utils.sh
 

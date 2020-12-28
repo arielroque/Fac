@@ -1,5 +1,5 @@
 #!/bin/bash
-#fac uninstall
+#Fac Uninstall
 
 source ./src/utils/fac_utils.sh
 

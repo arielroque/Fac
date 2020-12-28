@@ -1,5 +1,5 @@
 #!/bin/bash
-#fac gui
+#Fac Gui
 
 source ~/fac/src/utils/dialogs.sh
 source ~/fac/src/utils/fac_utils.sh
@@ -17,7 +17,7 @@ function handle_add_app() {
 }
 
 function handle_add_ide() {
-	URL=$(whiptail --title "Select PATH" --inputbox "Enter the desire projet PATH:" 10 60 3>&1 1>&2 2>&3)
+	URL=$(whiptail --title "Select path" --inputbox "Enter the desire projet path:" 10 60 3>&1 1>&2 2>&3)
 	EXITSTATUS=$?
 
 	add_ide "$1" "$2" $URL $ALIAS
@@ -65,9 +65,9 @@ function startSetup() {
 
 	APPLICATIONS_LIST[$((COUNT += 1))]="$((INDEX += 1))"
 	EXIT_INDEX=$INDEX
-	APPLICATIONS_LIST[$((COUNT += 1))]="Finalizar"
+	APPLICATIONS_LIST[$((COUNT += 1))]="<Save Command>"
 
-	OPTION=$(whiptail --title "Fac Wizard" --menu "Choose #aplications:" 18 60 11 \
+	OPTION=$(whiptail --title "Fac" --menu "Choose aplications:" 18 60 11 \
 		"${APPLICATIONS_LIST[@]}" 3>&1 1>&2 2>&3)
 
 	echo $OPTION
@@ -170,12 +170,8 @@ function prepare_enviroment() {
 }
 
 function main() {
-	if (whiptail --title "Fac Wizard" --yes-button "Ok" --no-button "Cancel" --yesno "Welcome to the Fast Automatization Command (FAC). Choose <Ok> to continue or <cancel> to exit." 10 60); then
-		while [ true ]; do
-			menu
-		done
-	else
-		exit
-	fi
+	while [ true ]; do
+		menu
+	done
 }
 main

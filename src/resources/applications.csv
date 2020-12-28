@@ -1,4 +1,4 @@
-#Referenced applications are described following the rule: APPLICATION_NAME,APPLICATION_ALIAS,FAC_APPLICATION_TYPE  
+#Referenced applications are described following the rule: NAME,ACTION,TYPE  
 
 Google Chrome;google-chrome;BROWSER
 Google Chrome Anonymous;google-chrome --incognito;BROWSER

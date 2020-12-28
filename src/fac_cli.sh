@@ -1,5 +1,5 @@
 #!/bin/bash
-#fac cli
+#Fac Cli
 
 source ~/fac/src/utils/fac_utils.sh
 source ~/fac/src/operations/operations.sh
