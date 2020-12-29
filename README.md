@@ -17,10 +17,13 @@ Fac is a powerful script that helps to optimize the opening of your workspaces. 
 
 ```bash
 # Clone  the repository
-git clone https://github.com/arielroque/fac.git
+git clone https://github.com/arielroque/Fac.git
 
 # Enter in the directory using cd
-cd fac
+cd Fac
+
+# Add permition to execute the Fac Scripts
+chmod +x ./*
 
 # Execute the following script
 source install.sh
@@ -28,7 +31,7 @@ source install.sh
 ```
 ## :computer: Usage
 
-After install, you can open the Fac running:
+After install,close the terminal to persist the changes and open another terminal with following command to open Fac:
 ```bash
 fac open
 ```
