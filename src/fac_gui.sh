@@ -1,9 +1,9 @@
 #!/bin/bash
 #Fac Gui
 
-source ~/fac/src/utils/dialogs.sh
-source ~/fac/src/utils/fac_utils.sh
-source ~/fac/src/operations/operations.sh
+source ~/.fac/src/utils/dialogs.sh
+source ~/.fac/src/utils/fac_utils.sh
+source ~/.fac/src/operations/operations.sh
 
 function handle_add_url_browser() {
 	URL=$(whiptail --title "Select URL" --inputbox "Enter the desire URL:" 10 60 3>&1 1>&2 2>&3)
@@ -37,7 +37,7 @@ function startSetup() {
 	APPLICATIONS_ALIAS=()
 	APPLICATIONS_TYPE=()
 
-	INPUT=~/fac/src/resources/applications.csv
+	INPUT=~/.fac/src/resources/applications.csv
 	OLDIFS=$IFS
 	IFS=';'
 
@@ -78,7 +78,7 @@ function startSetup() {
 
 		whiptail --title "Finish Add Command" --msgbox "Command succesfuly saved. Please close the terminal to apply the changes" 8 78
 
-		echo " alias $ALIAS='source ~/fac/alias/$ALIAS.sh'" >>~/fac/src/fac_alias.sh
+		echo " alias $ALIAS='source ~/.fac/alias/$ALIAS.sh'" >>~/.fac/src/fac_alias.sh
 
 		exit
 	fi
@@ -127,9 +127,9 @@ function menu() {
 	1)
 		create_alias
 		if [ -n "$ALIAS" ]; then
-			if [ ! -e ~/fac/alias/$ALIAS.sh ]; then
+			if [ ! -e ~/.fac/alias/$ALIAS.sh ]; then
 				while [ true ]; do
-					if [ ! -d ~/fac ]; then
+					if [ ! -d ~/.fac ]; then
 						prepare_enviroment
 					fi
 					startSetup
@@ -158,15 +158,15 @@ function menu() {
 }
 
 function prepare_enviroment() {
-	mkdir ~/fac
-	mkdir ~/fac/src
-	mkdir ~/fac/alias
+	mkdir ~/.fac
+	mkdir ~/.fac/src
+	mkdir ~/.fac/alias
 
-	touch ~/fac/src/fac_alias.sh
-	cp conf/fac-module.sh ~/fac/src
+	touch ~/.fac/src/fac_alias.sh
+	cp conf/fac-module.sh ~/.fac/src
 
-	echo "source ~/fac/conf/fac_module.sh" >>~/.bashrc
-	echo "source ~/fac/conf/fac_alias.sh" >>~/.bashrc
+	echo "source ~/.fac/conf/fac_module.sh" >>~/.bashrc
+	echo "source ~/.fac/conf/fac_alias.sh" >>~/.bashrc
 }
 
 function main() {

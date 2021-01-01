@@ -1,8 +1,8 @@
 #!/bin/bash
 #Fac Cli
 
-source ~/fac/src/utils/fac_utils.sh
-source ~/fac/src/operations/operations.sh
+source ~/.fac/src/utils/fac_utils.sh
+source ~/.fac/src/operations/operations.sh
 
 function fac() {
    if [ -z "$1" -a -z "$2" -a -z "$3" ]; then
@@ -20,7 +20,7 @@ function fac() {
       echo -e "   \e[95muninstall\e[0m    Uninstall Fac in your computer"
    else
       if [ "$1" == "open" -a -z "$2" -a -z "$3" ]; then
-         source ~/fac/src/fac_gui.sh
+         source ~/.fac/src/fac_gui.sh
       else
          if [ "$1" == "rm" ]; then
             remove_command $2
@@ -30,7 +30,7 @@ function fac() {
 
             else
                if [ "$1" == "uninstall" ]; then
-                  source ~/fac/uninstall.sh
+                  source ~/.fac/uninstall.sh
 
                else
                   echo -e "\e[31mOps! wrong command or arguments\e[0m"

@@ -24,7 +24,7 @@ function progress() {
 
 function list_applications() {
    ARRAY=()
-   INPUT=~/fac/src/resources/applications.csv
+   INPUT=~/.fac/src/resources/applications.csv
    OLDIFS=$IFS
    IFS=';'
    CONT=0
@@ -46,7 +46,7 @@ function list_applications() {
 
 function list_applications_commands() {
    ARRAY=()
-   INPUT=~/fac/src/resources/applications.csv
+   INPUT=~/.fac/src/resources/applications.csv
    OLDIFS=$IFS
    IFS=';'
    CONT=0
