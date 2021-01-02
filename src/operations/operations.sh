@@ -28,7 +28,7 @@ function add_browser() {
 
 function add_app() {
 	if [ -n "$3" ]; then
-		echo $1 >>~/fac/alias/$3.sh
+		echo $1 >>~/.fac/alias/$3.sh
 		show_sucessfully_alias_dialog "$2"
 	else
 		show_empty_alias_dialog

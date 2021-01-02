@@ -1,8 +1,6 @@
 #!/bin/bash
 #Fac Uninstall
 
-source ./src/utils/fac_utils.sh
-
 if [ -e ~/.fac ];then 
    rm -r ~/.fac
    sed -i "/fac_cli.sh/d" ~/.bashrc

@@ -74,13 +74,15 @@ function startSetup() {
 	echo $EXIT_INDEX
 
 	if [ $OPTION -eq $EXIT_INDEX ]; then
-		show_progress_bar
 
-		whiptail --title "Finish Add Command" --msgbox "Command succesfuly saved. Please close the terminal to apply the changes" 8 78
-
-		echo " alias $ALIAS='source ~/.fac/alias/$ALIAS.sh'" >>~/.fac/src/fac_alias.sh
-
-		exit
+		if [ -e ~/.fac/alias/$ALIAS.sh ]; then
+			show_progress_bar
+			whiptail --title "Finish Add Command" --msgbox "Command succesfuly saved. Please close the terminal to apply the changes" 8 78
+			echo " alias $ALIAS='source ~/.fac/alias/$ALIAS.sh'" >>~/.fac/src/fac_alias.sh
+			exit
+		else
+			show_empy_command_dialog "$1"
+		fi
 	fi
 
 	APPLICATIONS_TYPE_SELECTED="${APPLICATIONS_TYPE[$OPTION]}"

@@ -19,6 +19,10 @@ function show_invalid_alias_dialog(){
     whiptail --title "Notification" --msgbox "Command $1 does not exist. Please try again" 10 60
 }
 
+function show_empy_command_dialog(){
+	whiptail --title "Notification" --msgbox "Command $1 is empty. Try add some application or command" 10 60
+}
+
 function show_empty_alias_dialog(){
     whiptail --title "Notification" --msgbox "$1 name is empty. Please enter again" 10 60
 }
@@ -44,4 +48,4 @@ function show_progress_bar(){
 	} | whiptail --gauge "Please wait while saving the command" 6 60 0
 }
 
-export -f show_exit_dialog show_removed_alias_dialog show_already_added_alias_dialog show_invalid_alias_dialog show_empty_alias_dialog show_sucessfully_alias_dialog
+export -f show_exit_dialog show_removed_alias_dialog show_already_added_alias_dialog show_invalid_alias_dialog show_empty_alias_dialog show_sucessfully_alias_dialog show_empy_command_dialog
