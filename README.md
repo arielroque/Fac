@@ -1,5 +1,4 @@
 
-# Fast Automatization Command - FAC
 
 ![fac logo](https://user-images.githubusercontent.com/17733053/76709507-04f29100-66de-11ea-9a8a-0b6a81d588aa.png)
 
