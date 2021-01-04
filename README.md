@@ -1,6 +1,7 @@
 
-![fac logo](https://user-images.githubusercontent.com/17733053/76709507-04f29100-66de-11ea-9a8a-0b6a81d588aa.png)
+# Fast Automatization Command - FAC
 
+![fac logo](https://user-images.githubusercontent.com/17733053/76709507-04f29100-66de-11ea-9a8a-0b6a81d588aa.png)
 
 ## :question: What is Fac?
 Fac is a powerful script that helps to optimize the opening of your workspaces. Create custom commands to **open programs** or perform **actions** quickly.
@@ -70,5 +71,6 @@ Pull request are also welcome , please read  [CONTRIBUTING.md](/CONTRIBUTING.md)
 -   Check  [issue templates](https://github.com/arielroque/Mi-action/issues)  for the suggested issue formats
 
 ## License
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Farielroque%2Ffac.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2Farielroque%2Ffac?ref=badge_large)
 
 This project is licensed under the Apache License - see the [LICENSE.md](https://github.com/arielroque/fac/blob/developer/LICENSE) for details
