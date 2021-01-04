@@ -4,7 +4,7 @@
 
 ```bash
 # Go to Fac Resources
-cd ~/fac/src/resources
+cd ~/.fac/src/resources
 
 # Open applications.csv (We will open with Vim but you could open to your favorite editor)
 vim applications.csv
