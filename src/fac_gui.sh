@@ -1,80 +1,101 @@
 #!/bin/bash
-#fac gui
+#Fac Gui
 
-source ~/fac/src/utils/dialogs.sh
-source ~/fac/src/operations/operations.sh
+source ~/.fac/src/utils/dialogs.sh
+source ~/.fac/src/utils/fac_utils.sh
+source ~/.fac/src/operations/operations.sh
 
-function add_url_browser() {
+function handle_add_url_browser() {
 	URL=$(whiptail --title "Select URL" --inputbox "Enter the desire URL:" 10 60 3>&1 1>&2 2>&3)
 	EXITSTATUS=$?
 
-	if [ -n "$URL" ]; then
-		if [ $EXITSTATUS = 0 ]; then
-			echo "$1 $URL&" >>~/fac/alias/$ALIAS.sh
-			show_sucessfully_alias_dialog "$2"
-		fi
-	else
-		show_empty_alias_dialog
-	 'Url'
-	fi
+	add_browser "$1" "$2" $URL $ALIAS
+}
+
+function handle_add_app() {
+	add_app "$1" "$2" $ALIAS
+}
+
+function handle_add_ide() {
+	URL=$(whiptail --title "Select path" --inputbox "Enter the desire projet path:" 10 60 3>&1 1>&2 2>&3)
+	EXITSTATUS=$?
+
+	add_ide "$1" "$2" $URL $ALIAS
+}
+
+function handle_remove_command() {
+	ALIAS=$(whiptail --title "Remove Command" --inputbox "Enter the command name:" 10 60 3>&1 1>&2 2>&3)
+	EXITSTATUS=$?
+
+	remove_command $ALIAS
 }
 
 function startSetup() {
-	OPTION=$(whiptail --title "Fac Wizard" --menu "Choose #aplications:" 18 60 11 \
-		"1" "Google Chrome url" \
-		"2" "Google Chrome url (Anonymous)" \
-		"3" "Google Chrome url (Security Disable)" \
-		"4" "Mozila Firefox url" \
-		"5" "Visual Code project" \
-		"6" "Sublime Ide project" \
-		"7" "Libre Office" \
-		"8" "Calculator" \
-		"9" "Slack" \
-		"10" "Spotify" \
-		"11" "Save the command" 3>&1 1>&2 2>&3)
 
-	case $OPTION in
-	1)
-		add_url_browser "google-chrome" "Google Chrome"
-		;;
-	2)
-		add_url_browser "google-chrome --incognito" "Google Chrome (Anonymous)"
-		;;
-	3)
-		add_url_browser "google-chrome-stable --disable-web-security --user-data-dir=~/.config/google-chrome/Default" "Google Chrome (Security Disabled)"
-		;;
-	4)
-		add_url_browser "firefox" "Mozila Firefox"
-		;;
-	5)
-		add_ide "code" "Visual Code"
-		;;
-	6)
-		add_ide "subl" "Sublime"
-		;;
-	7)
-		add_app "libreoffice" "Libre Office"
-		;;
-	8)
-		add_app "gnome-calculator" "Calculator"
-		;;
-	9)
-		add_app "slack" "Slack"
-		;;
-	10)
-		add_app "spotify" "Spotify"
-		;;
-	11)
-		show_progress_bar
+	APPLICATIONS_LIST=()
+	APPLICATIONS_NAMES=()
+	APPLICATIONS_ALIAS=()
+	APPLICATIONS_TYPE=()
 
-		whiptail --title "Finish Add Command" --msgbox "Command succesfuly saved. Please close the terminal to apply the changes" 8 78
+	INPUT=~/.fac/src/resources/applications.csv
+	OLDIFS=$IFS
+	IFS=';'
 
-		echo " alias $ALIAS='source ~/fac/alias/$ALIAS.sh'" >>~/fac/src/fac_alias.sh
+	EXIT_INDEX=0
+	COUNT=0
+	INDEX=0
 
-		exit
+	[ ! -f $INPUT ] && {
+		echo "$INPUT file not found"
+		exit 99
+	}
+
+	while read name alias type; do
+		if [ ! -z $name ] && [ ! -z $alias ] && [ ! -z $type ]; then
+			APPLICATIONS_LIST[$((COUNT += 1))]="$((INDEX += 1))"
+			APPLICATIONS_LIST[$((COUNT += 1))]="$name"
+
+			APPLICATIONS_NAMES[$((INDEX))]="$name"
+			APPLICATIONS_ALIAS[$((INDEX))]="$alias"
+			APPLICATIONS_TYPE[$((INDEX))]="$type"
+		fi
+	done <$INPUT
+
+	IFS=$OLDIFS
+
+	APPLICATIONS_LIST[$((COUNT += 1))]="$((INDEX += 1))"
+	EXIT_INDEX=$INDEX
+	APPLICATIONS_LIST[$((COUNT += 1))]="<Save Command>"
+
+	OPTION=$(whiptail --title "Fac" --menu "Choose aplications:" 18 60 11 \
+		"${APPLICATIONS_LIST[@]}" 3>&1 1>&2 2>&3)
+
+	echo $OPTION
+	echo $EXIT_INDEX
+
+	if [ $OPTION -eq $EXIT_INDEX ]; then
+
+		if [ -e ~/.fac/alias/$ALIAS.sh ]; then
+			show_progress_bar
+			whiptail --title "Finish Add Command" --msgbox "Command succesfuly saved. Please close the terminal to apply the changes" 8 78
+			echo " alias $ALIAS='source ~/.fac/alias/$ALIAS.sh'" >>~/.fac/src/fac_alias.sh
+			exit
+		else
+			show_empy_command_dialog "$1"
+		fi
+	fi
+
+	APPLICATIONS_TYPE_SELECTED="${APPLICATIONS_TYPE[$OPTION]}"
+
+	case $APPLICATIONS_TYPE_SELECTED in
+	"BROWSER")
+		handle_add_url_browser "${APPLICATIONS_ALIAS[$OPTION]}" "${APPLICATIONS_NAMES[$OPTION]}"
 		;;
-	*)
-		show_edit_dialog
+	"IDE")
+		handle_add_ide "${APPLICATIONS_ALIAS[$OPTION]}" "${APPLICATIONS_NAMES[$OPTION]}"
+		;;
+	"GENERAL")
+		handle_add_app "${APPLICATIONS_ALIAS[$OPTION]}" "${APPLICATIONS_NAMES[$OPTION]}"
 		;;
 	esac
 
@@ -93,9 +114,10 @@ function create_alias() {
 }
 
 function menu() {
-	MENU=$(whiptail --title "Menu" --menu "Select one option:" 15 60 8 "1" "Add new command" \
+	MENU=$(whiptail --title "Fac" --menu "Select one option:" 15 60 8 "1" "Add new command" \
 		"2" "Show all created commands" \
-		"3" "Remove command" 3>&1 1>&2 2>&3)
+		"3" "Remove command" \
+		"4" "Exit" 3>&1 1>&2 2>&3)
 
 	EXITSTATUS=$?
 	if [ $EXITSTATUS == 1 ]; then
@@ -107,9 +129,9 @@ function menu() {
 	1)
 		create_alias
 		if [ -n "$ALIAS" ]; then
-			if [ ! -e ~/fac/alias/$ALIAS.sh ]; then
+			if [ ! -e ~/.fac/alias/$ALIAS.sh ]; then
 				while [ true ]; do
-					if [ ! -d ~/fac ]; then
+					if [ ! -d ~/.fac ]; then
 						prepare_enviroment
 					fi
 					startSetup
@@ -120,7 +142,7 @@ function menu() {
 
 		else
 			show_empty_alias_dialog
-		 'Command'
+			'Command'
 			main
 		fi
 		;;
@@ -129,28 +151,29 @@ function menu() {
 		;;
 
 	3)
-		remove_alias
+		handle_remove_command
+		;;
+	4)
+		exit
 		;;
 	esac
 }
 
 function prepare_enviroment() {
-	mkdir ~/fac
-	mkdir ~/fac/src
-	mkdir ~/fac/alias
-	touch ~/fac/src/fac_alias.sh
-	cp conf/fac-module.sh ~/fac/src
-	echo "source ~/fac/conf/fac_module.sh" >>~/.bashrc
-	echo "source ~/fac/conf/fac_alias.sh" >>~/.bashrc
+	mkdir ~/.fac
+	mkdir ~/.fac/src
+	mkdir ~/.fac/alias
+
+	touch ~/.fac/src/fac_alias.sh
+	cp conf/fac-module.sh ~/.fac/src
+
+	echo "source ~/.fac/conf/fac_module.sh" >>~/.bashrc
+	echo "source ~/.fac/conf/fac_alias.sh" >>~/.bashrc
 }
 
 function main() {
-	if (whiptail --title "Fac Wizard" --yes-button "Ok" --no-button "Cancel" --yesno "Welcome to the Fast Automatization Command (FAC). Choose <Ok> to continue or <cancel> to exit." 10 60); then
-		while [ true ]; do
-			menu
-		done
-	else
-		exit
-	fi
+	while [ true ]; do
+		menu
+	done
 }
 main

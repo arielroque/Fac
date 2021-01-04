@@ -1,14 +1,11 @@
 #!/bin/bash
-#fac uninstall
+#Fac Uninstall
 
-source ./src/utils/fac_utils.sh
-
-if [ -e ~/fac ];then 
-   rm -r ~/fac
+if [ -e ~/.fac ];then 
+   rm -r ~/.fac
    sed -i "/fac_cli.sh/d" ~/.bashrc
    sed -i "/fac_alias.sh/d" ~/.bashrc
 
-   fac_label
    progress
 
    echo -e "\e[32m--> Uninstall completed successfully \e[0m"
