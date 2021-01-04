@@ -67,7 +67,7 @@ fac uninstall
 
 Pull request are also welcome , please read  [CONTRIBUTING.md](/CONTRIBUTING.md)  for details on our code of conduct, and the process for submitting pull requests to us.
     
--   Check  [issue templates](https://github.com/arielroque/Mi-action/issues)  for the suggested issue formats
+-   Check  [issue templates](https://github.com/arielroque/Fac/issues)  for the suggested issue formats
 
 ## License
 [![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Farielroque%2Ffac.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2Farielroque%2Ffac?ref=badge_large)
