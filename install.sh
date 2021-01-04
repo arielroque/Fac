@@ -1,42 +1,39 @@
 #!/bin/bash
-#FAC install
-#(C) 2019 Ariel Roque / UFCG
+#Fac Install
 
-function progress(){
-   echo -ne '\e[93m .....              (32%)\r'
-   sleep 1
-   echo -ne '\e[93m ............       (70%)\r'
-   sleep 1
-   echo -ne '\e[93m .................. (100%)\r'
-   sleep 1
+source ./src/utils/fac_utils.sh
+
+function start_enviroment(){
+   mkdir ~/.fac
+   mkdir ~/.fac/src
+   mkdir ~/.fac/alias
+
+   cp -r src/*  ~/.fac/src/
+   cp ./uninstall.sh ~/.fac
+   touch ~/.fac/src/fac_alias.sh
+   source ~/.fac/src/fac_alias.sh
+
+   echo "alias facgui='source ~/.fac/src/setup.sh'" >> ~/.fac/src/fac_alias.sh
+   echo "source ~/.fac/src/fac_cli.sh" >> ~/.bashrc
+   echo "source ~/.fac/src/fac_alias.sh" >> ~/.bashrc
 }
 
-function startAmbiance(){
-   mkdir ~/fac
-   mkdir ~/fac/conf
-   mkdir ~/fac/alias
-   touch ~/fac/conf/fac-alias.sh
-   cp conf/fac-module.sh  ~/fac/conf
-   cp conf/setup.sh ~/fac/conf
-   cp remove.sh ~/fac/conf
-   source ~/fac/conf/fac-alias.sh
-   echo "alias facgui='source ~/fac/conf/setup.sh'" >> ~/fac/conf/fac-alias.sh
-   echo "source ~/fac/conf/fac-module.sh" >> ~/.bashrc
-   echo "source ~/fac/conf/fac-alias.sh" >> ~/.bashrc
-}
-
-if [ ! -d ~/fac ];then
-    startAmbiance
+if [ ! -d ~/.fac ];then
+    start_enviroment
+   
 else
-   rm -r ~/fac
-   sed -i "/fac-module.sh/d" ~/.bashrc
-   sed -i "/fac-alias.sh/d" ~/.bashrc
+   rm -r ~/.fac
+   sed -i "/fac_module.sh/d" ~/.bashrc
+   sed -i "/fac_alias.sh/d" ~/.bashrc
 
-   startAmbiance
+   start_enviroment
+
 fi
+
+fac_label
 
 progress
 
-echo -e "\e[32m Instalation completed successfully \e[0m"
-echo -e "\e[0m Close the terminal to apply the changes"
+echo -e "\e[32m--> Instalation completed successfully \e[0m"
+echo -e "\e[0m    Close the terminal to apply the changes"
 
